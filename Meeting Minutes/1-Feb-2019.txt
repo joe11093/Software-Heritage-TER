@@ -1,0 +1,30 @@
+TER
+
+on s'interesse à recuperer les logiciels disponibles online
+
+Software heritage ont creé une structure arborescente pour preserver le code et eviter la redondance, et preserver les differentes versions du même logiciel.
+
+Software Heritage est le plus grand graphe publique.
+
+Problem: il n'existe pas un model unifié pour representer les projets. Github, bitbucket, openhub, etc ont chacun leur propre model.
+Software Heritage ont leur propre model.
+Le but est de recupérer les models de differents depôts de code et les transformer en model Software Heritage.
+
+Le programme qui performe le crawling s'appele Lister
+
+On va choisir un ou plusieurs depots et leur ecrire un lister.
+
+Pour eviter d'avoir des bugs ou des problemes avec la version online de Software Heritage, on va installer une version locale et tester notre/nos listers dessus.
+
+Il existe des tutoriels sur le site de Software Heritage pour expliquer comment installer une version locale de Software Heritage, et comment ecrire un Lister. La programmation se fait en Python. 
+
+Notre travail:
+
+1) Lire les articles des recherche
+2) Lire la documentation sur l'architecture de Software Heritage
+3) Lire les tutoriels
+4) Commenter les tutoriels. Qu'est ce qui marche, qu'est ce qui ne marche pas. Qu'est qui peut être amelioré. Qu'est ce qui peut être plus claire. 
+5) installer la version locale de Software Heritage
+6) choisir un depot et lui ecrire un Lister. 
+
+Extra: essayer d'automatiser la creation des listers dans l'esprit des lignes de produits
