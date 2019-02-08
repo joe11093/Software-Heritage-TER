@@ -1,0 +1,4 @@
+Documentation générale: https://docs.softwareheritage.org/devel/
+Documentation Software Heritage (version locale) : https://docs.softwareheritage.org/devel/getting-started.html#getting-started
+Liste des Listers avec informations : https://forge.softwareheritage.org/source/swh-lister/
+Tutoriel Lister : https://www.softwareheritage.org/2017/03/24/list-the-content-of-your-favorite-forge-in-just-a-few-steps/
