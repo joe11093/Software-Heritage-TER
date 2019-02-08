@@ -1,0 +1,103 @@
+L'equipe:
+=========
+SHAQURA Tasnim
+
+SABA Joseph
+
+RIMA Bachar
+
+--note about ajna
+
+
+Documents à Lire
+=================
+
+1- 'Identifiers for Digital Objects: the Case of Software Source Code Preservation' by Roberto Di Cosmo, Morane Gruenpeter, Stefano Zacchiroli
+
+2- 'Building the Universal Archive of Source Code' by Jean-François Abramatic, Roberto Di Cosmo, and Stefano Zacchiroli
+
+3- 'Software Heritage: Why and How to Preserve Software Source Code' by Roberto Di Cosmo, Stefano Zacchiroli
+
+4- La documentation generale de Software Heritage: https://docs.softwareheritage.org/devel/
+
+5- La documentation des Listers: https://www.softwareheritage.org/2017/03/24/list-the-content-of-your-favorite-forge-in-just-a-few-steps/
+
+6- Les codes sources des Listers déja écrits par l'équipe de Software Heritage: https://forge.softwareheritage.org/source/swh-lister/
+
+7- La documentation des tests: https://docs.softwareheritage.org/devel/getting-started.html#getting-started
+
+
+Taches:
+========
+
+Apprentissage:
+--------------------------------------------------------
+
+Lire, resumer et commenter les documents assignés
+
+Lire les resumés des documents des autres membres de l'équipe et les comprendre
+
+Installer l'environement de test de software heritage
+
+Ecrire le rapport de la phase d'apprentissage
+
+Faire la presentation de la phase d'apprentissage
+
+--------------------------------------------------------
+
+
+
+
+
+Rediger le bilan de mi-parcours
+
+
+
+
+Modelisation et Conception:
+----------------------------------------------
+
+Decider quel Forge va être traité
+	Lire la documentation de(s) Forge(s)
+	Formaliser le model de(s) Forge(s)
+
+Concevoir un/des Lister(s) pour les Forges
+
+Ecrire le rapport de la phase de modelisation et conception
+
+Faire la presentation de la phase de modelisation et conception
+----------------------------------------------
+
+
+Implementation
+-----------------------------------------------
+
+Coder le Lister
+
+Tester le Lister en version locale
+
+Ecrire le tutoriel pour la creation d'un lister
+
+Ecrire le tutoriel pour les tests
+
+Ecrire le rapport de la phase d'implementation
+
+Faire la presentation de la phase d'implentation
+
+-----------------------------------------------
+
+
+Finalisation:
+-------------------------------
+
+Finaliser la critique de le documentations de software heritage
+
+Finaliser les tutoriels
+
+Finaliser le rapport
+
+Faire la présentation
+
+Preparer pour la soutenance
+
+--------------------------------
