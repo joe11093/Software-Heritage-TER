@@ -1,0 +1,173 @@
+1- Introduction
+===================
+
+In order to manipulate an entity, it is essential to be able to refer to it. When building an information system, we have the same need to name the entities that the system refers to. We call that name "indentifier". The concept of the identifier is complex and subtle. The article will look at the requirements and use cases that have to be considered when looking for a class of identifiers to be used in Software Heritage.
+
+The requirements for this initiative are not satified by well-known identifiers schemas that are currently in use in digital preservation. But there are concepts that are currently in used that can be levaraged to create identifiers for digitals object that satisfy the requirments of software heritage.
+
+
+
+2- Requirements and use cases
+==================================
+
+Software Heritage is an inititive whose goal is preserving software source code and its development history as captured by version control systems. It is important to preserve the source code as it is easily readble by humans and easily modifiable. This archive will be accessible through a web portal where software source code can be downloaded. A network of mirrors is being created across different geographical areas and juridictions and using different storage technologies to ensure preservation.
+This means the identifiers for software artifacts must satisfy a lot of use cases.
+
+2.1 Software Development
+=========================
+Software Heritage aims to be a universal, vendor-neutral, persistent reference software archive. It must allow developers to obtain for each archived software artifact an unambiguous identifier that enables collaborative development and facilitate spotting and fixing errors.
+
+referece, versioning, granularity
+----------------------------------
+An identifier in SH must be able to reference a specific version of the source code of a project at different levels of granularity: repository, release, and even a single file.
+Some software might use external software (libraries, data, multimedia). 	SH identifiers change when the internal resources are changed, and not when the external resources are changed.
+
+integrity
+------------------------------------
+Identifiers are expected to provide a means of checking integrity. Having the identifier and the object it identifies should be enough to verify that the object hasn't been modified. 
+
+2.2 Software Citation
+======================
+There is yet no standard way to site software in research.  Here the focus is only on identifying software artifacts such as source code, binaries.
+3 goals for referencing software:
+	1. identify a software project to recognize the author (wont deal with it in this paper)
+	2. identify a specific artifact to be able to reproduce it and and experiment on it
+	3. ti be able to guarantee the accuracy and consistency of the link between a specific software and its identifier
+An archive of source code should provide a unique, persistent, and intrinsics identifier for a specific software artifact to ensure direct access to it. (even if it's host shuts down, or its creator deletes it)
+
+2.3 Software evolution tracking
+================================
+To analyze the transformation and evolution of software, we must be able to trace its origin and potentially where future versions can be found. In SH, the origin is a URL that represents the location that was crawled. Software can have multiple origins (collaborations, mirrors...), mapping all of them cannot be fully automated yet.
+
+2.4 Long term digital preservation
+===================================
+The number of archived elements is steadily growing so we need identifiers that guarantee uniqueness and persistence on the long term.
+They must be:
+gratis because there's a huge number of software artifacts to index.
+intrinsic so as to not rely on 3rd party resolvers that might potentially disappear later.
+
+2.5 Summing up
+===============
+Identifiers need to be unique, persistent, intrinsic, and allow support for versionning and identifying objects at different levels of granularity.
+
+
+
+3 Identifier Systems and their properties
+==========================================
+
+3.1 Identifier systems
+=======================
+
+Identifier system are composed of a set of labels that can be used as references for objects, and of mechanisms that perform some or all of the following operations:
+	generation: creating a new label
+	assignment: associate a label with an object
+	verification: verify that a given label and object correspond
+	retrieval: provide a means to get a copy of an object given its label
+	reverse lookup: given an object, get its label
+	description: given a label, provide the means of getting the metadata describing the corresponding object
+
+3.2 General properties
+=======================
+Uniqueness: one object should have only one canonical identifier
+
+Non ambiguity: one identifier must denote only one object
+
+Persistence: an identifier should keep its relevant properties in the long terms even if the object it refers to has disappeared
+
+Integrity: an object denoted by an identifier is expected not to silently be changed later on. An identifier ensures integrity if the user can verify that the object retrived at any point in time is the same as the one that was associated at the beginning.
+
+No middle man: should not rely on a central authority for assigning identifiers or using them.
+
+abstraction: the identifier must not expose details that might change later on
+
+gratis (free of charge): no fees must be charged to use this system of identification
+
+3.3 Discussion
+===============
+
+
+3.4 DIOs vs IDOs
+================
+
+The software heritage team has investigated existing identifier systems but they all lacked some of the properties that are requiered for a long-term uiversal source code archive. All the systems that were investigated were designed to provide digital identifiers for objects, any kind of objects, not just digital ones. For Software Heritage, IDO (identifiers for digital objects) are what's needed. The objects to be archived are all born digital and are represented by a source code file which is exactly the sequence that makes it up.
+Recent advances in Computer Science make it possible to design identifiers that do not rely on administrative care for uniqueness, non-ambiguity, and persistence; can be created and assigned without any central authority; and allow anyone to check independently the integrity of the corresponding digital object.
+
+4 Software Heritage Data Model
+===============================
+
+The bottom of the tree contains the "file contents", uniquely identified by a cryptographic hash. If the same file is used in multiple projects, it is stored only once and its hashed is used as a unique identifier to link its content from the different directory where it appears.
+Directories are stored as text files and theyre're aso hashed so duplicated directories are only stored once. This no-duplication mechanism ensures that objects will not be stored twice and therefore storage will be more efficient; it's also a robust mechanism to provide intrinsic and unique identifiers.
+
+Supported artifacts:
+
+	contents (AKA “blobs”): the raw content of a file without its context/ note that their names are context-dependent and stored as part of directory entries
+
+	directories: a list of named directory entries, where each entry can point to content objects (“file entries”), revisions (“revision entries”), or transitively to other directories (“directory entries”). All entries are associated with the local name of the entry (i.e., a relative path without any path separator) and permission metadata and modification timestamps
+
+	revisions (AKA “commits”): a point-in-time snapshot in the development history of a project. A revision is made for each modification in the software development workflow, containing the root directory of the software artifact. The revision identifier is calculated with the cryptographic hash of all the metadata provided with the source code directory itself.
+
+	releases (AKA “tags”): a revision that has been marked as noteworthy by a project with a specific, usually mnemonic, name (for instance, a version number). Each release points to a revision and might include additional descriptive metadata.
+
+	snapshots: During software development, within a team, the work can be separated into branches to better collaborate. When collecting the software artifact, it is important to capture and identify the state of all visible branches during a specific visit, known as a snapshot
+
+This structure allows us to store specific versiones of archived projects (pinted by release objects), their full development history (chain of revision objects), and development states at specific points in time (pointed by snapshot objects). The provenance information is stored too. Each time a location is crawled, its full state is captured in a snapshot object. Previous snapshot objects might be reused  if the same state was observed in the past. A 3-way mapping between the place (URL), time of the visit, and the snapshot object is added to an append-only record of the crawling activities.
+
+
+5 Software Heritage Identifiers
+===============================
+
+<identifier> ::= "swh" ":" <scheme_version> ":" <object_type> ":" <object_id> ;
+<scheme_version> ::= "1" ;
+<object_type> ::=
+"snp" (* snapshot *)
+| "rel" (* release *)
+| "rev" (* revision *)
+| "dir" (* directory *)
+| "cnt" (* content *)
+;
+<object_id> ::= 40 * <hex_digit> ;
+(* intrinsic object id, as hex-encoded SHA1 *)
+<hex_digit> ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+| "a" | "b" | "c" | "d" | "e" | "f" ;
+
+5.3 Git Compatibility
+=====================
+Currently, a Software Heritage identifier will be identical to a Git blob identifier for all object types except Snapshots since Git doesn't have an object equivalent so Snapshots
+
+5.4 examples
+=============
+
+5.5 Contextual Information
+============================
+Persistent identifiers can be complemented with contextual information. Currently, 2 types of contextual information are supported:
+	origin: which is where the software originated from (exp: http://github.com/id-software/Quake-III-Arena)
+	line number(s) of interest: a single line number or a range (two numbers separated by a - )
+
+	<identifier_with_context> ::= <identifier> [<lines_ctxt>] [<origin_ctxt>] ;
+	<lines_ctxt> ::= ";" "lines" "=" <line_number> ["-" <line_number>] ;
+	<origin_ctxt> ::= ";" "origin" "=" <url> ;
+	<line_number> ::= <dec_digit> + ;
+	<url> ::= (* RFC 3986 compliant URLs *) ;
+
+More might be added in the future (??Possible to add some for the TER??)
+
+6 Validation
+=============
+The probability of accidental collusion is 1 in 10^28 which is negligibly small.
+Malicious attacks are possible but currently require 6000 years of computing time. To counter this potential threat, Software Heritage internally stores multiple hashes for each object, with SHA1 being the weakest of them.  This allows spotting both accidental collisions and malicious attacks on a particular hash function.
+
+	uniqueness: the hash is computed from the object itself using a determenistic process so each object can only be given a single identifier
+
+	non-ambiguity:  chances of finding a collision are negligible
+
+	persistence: nothing will be deleted intentionally and schema versions will be maintained even if they beome obsolete
+
+	integrity: using a cryptographic hash as identifier ensures that any modification on an object will generate a very different identifier. The identifier can then be recomputed to verify that it is indeed the right object.
+
+	no middle man: the link between an identifier and an object doesn't need an online resolver. They can be verified and used outside of the system that created them
+
+	abstraction(opacity): The schema doesn't expose any piece of information that might change over time
+
+	free of charge: there are no costs for creating and attributing the identifiers
+
+The only issue with this schema is that it doesnt shw us the object's origin. Which is why optional contextual attributes are provided. 
