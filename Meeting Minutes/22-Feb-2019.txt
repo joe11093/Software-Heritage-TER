@@ -1,0 +1,19 @@
+At LIRRM
+
+
+We explained the documents we read to each other.
+We discussed the documents.
+We decided 
+
+	1- Installing Docker (read the SH documentation)
+	2- Installing Installing Software Heritage
+	3- Read the documentation of the GitHub listers and the Bitbucket lister
+
+We decided to do the Lister of SourceForge.
+
+We talked about possibilities for an extension of our TER.
+	a. Lignes de Produits
+	b. Full and incremental Lister
+	c. Doing a loader for Bazaar and then doing a Lister for a forge that uses Bazaar (Launchpad)
+	d. Think of possible additional contextual information that can be added
+	e. Full code indexing and full-text search

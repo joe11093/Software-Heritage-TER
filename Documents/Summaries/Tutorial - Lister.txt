@@ -1,0 +1,26 @@
+Link: https://docs.softwareheritage.org/devel/swh-lister/tutorial.html#lister-tutorial
+
+A basic lister must follow these steps:
+
+1 Issue a network request for a service endpoint.
+2 Convert the response into a canonical format.
+3 Populate a work queue for fetching and ingesting source repositories.
+
+
+There's a generic lister base class and ORM model. A subclass of the lister base should already be able to do almost everything needed to complete a listing task for a single service request/response cycle with the following implementation requirements:
+	
+	1- A member variable must be declared called MODEL, which is equal to a subclass of the base ORM model.
+	2- A method called transport_request must be implemented, which takes the complete target identifier (e.g., a URL) and tries to request it one time using whatever transport protocol is required for interacting with the service. It should not attempt to retry on timeouts or do anything else with the response (that is already done). It should just either return the response or raise a FetchError exception.
+	3- A method called transport_response_to_string must be implemented, which takes the entire response of the request and converts it to a string for logging purposes.
+	4- A method called transport_quota_check must be implemented, which takes the entire response of the request and checks to see if the process has run afoul of any query quotas or rate limits. If the service says to wait before making more requests, the method should return True and also the number of seconds to wait, otherwise it returns False.
+	5- A method called transport_response_simplified must be implemented, which also takes the entire response of the request and converts it to a Python list of dicts (one dict for each repository) with keys given according to the aforementioned MODEL class members.
+
+
+Because 1, 2, 3, and 4 are basically dependent only on the chosen network protocol, we also have an HTTP mix-in module, which supplements the lister base and provides default implementations for those methods along with optional request header injection using the Python Requests library. 
+
+Another layer over the base lister is provided that adds support for indexes. Some forges don't give out entire results at once but instead allow you to query them using indices. If we want to use it, we have to inherit from SWHIndexingLister instead of SWHListerBase. 
+An additional requirement is then added:
+	1) A method called get_next_target_from_response must be defined, which takes a complete request response and returns the index (‘foo’ above) of the next page.
+
+
+
