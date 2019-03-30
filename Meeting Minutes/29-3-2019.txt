@@ -21,3 +21,8 @@ We are trying to find the model of SourceForge.
 We need to check if SourceForge respects (he IETF standard for communicating rate limits with HTTP code 429 ) [https://docs.softwareheritage.org/devel/swh-lister/tutorial.html#lister-tutorial] since not all hosting services choose to respect them.
 
 We need to find what format SourceForge's responses are in. JSON like Github and Bitbucket? Something else?
+
+19:09
+We spent the day searching the APIs of SourceForge and Launchpad. We are so far not able to find any way to obtain all the repos.
+We sent an email to Jessy to ask her if we could contact the SWH team.
+We sent an email to SourceForge's support (sfnet_ops@slashdotmedia.com) to ask for help regarding the API.
