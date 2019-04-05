@@ -1,0 +1,14 @@
+1)
+https://docs.softwareheritage.org/devel/swh-lister/tutorial.html#lister-tutorial
+
+parts 3 and 4 references the "request in (1)" but (1) is a variable declaration. Should it reference 2?
+
+
+2) Do a Loader for Bazaar? (or other popular alternatives)
+	This would also allow us to write tutorial for how to create a loader.	
+	We already have the sequence diagram which might help us to create a loader.
+	We will need to look up the loader code and understand how it works.
+
+3) Ligne de produits? (we dont like this suggestion much)
+
+4) Create another Lister?

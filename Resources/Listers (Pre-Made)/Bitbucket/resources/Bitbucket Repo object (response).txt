@@ -1,0 +1,116 @@
+Source: https://developer.atlassian.com/bitbucket/api/2/reference/meta/uri-uuid
+Source: https://api.bitbucket.org/swagger.json
+
+Second source contains the JSON Schema
+
+
+Repository object and UUID
+
+
+Once you have the UUID for a repository you no longer need a username or team name to make the API call so long as you use an empty field. This helps you resolve repositories no matter if the username or team name changes.
+
+Call with team name (1team) and repository name (moxie):
+curl https://api.bitbucket.org/2.0/repositories/1team/moxie
+
+Call with UUID and empty field:
+curl https://api.bitbucket.org/2.0/repositories/%7B%7D/%7B21fa9bf8-b5b2-4891-97ed-d590bad0f871%7D
+
+Call with UUID and teamname:
+curl https://api.bitbucket.org/2.0/repositories/1team/%7B21fa9bf8-b5b2-4891-97ed-d590bad0f871%7D
+
+
+Response
+
+{
+    "created_on": "2013-11-08T01:11:03.222520+00:00",
+    "description": "",
+    "fork_policy": "allow_forks",
+    "full_name": "1team/moxie",
+    "has_issues": false,
+    "has_wiki": false,
+    "is_private": false,
+    "language": "",
+    "links": {
+        "avatar": {
+            "href": "https://bitbucket.org/1team/moxie/avatar/32/"
+        },
+        "branches": {
+            "href": "https://api.bitbucket.org/2.0/repositories/1team/moxie/refs/branches"
+        },
+        "clone": [
+            {
+                "href": "https://bitbucket.org/1team/moxie.git",
+                "name": "https"
+            },
+            {
+                "href": "ssh://git@bitbucket.org/1team/moxie.git",
+                "name": "ssh"
+            }
+        ],
+        "commits": {
+            "href": "https://api.bitbucket.org/2.0/repositories/1team/moxie/commits"
+        },
+        "downloads": {
+            "href": "https://api.bitbucket.org/2.0/repositories/1team/moxie/downloads"
+        },
+        "forks": {
+            "href": "https://api.bitbucket.org/2.0/repositories/1team/moxie/forks"
+        },
+        "hooks": {
+            "href": "https://api.bitbucket.org/2.0/repositories/1team/moxie/hooks"
+        },
+        "html": {
+            "href": "https://bitbucket.org/1team/moxie"
+        },
+        "pullrequests": {
+            "href": "https://api.bitbucket.org/2.0/repositories/1team/moxie/pullrequests"
+        },
+        "self": {
+            "href": "https://api.bitbucket.org/2.0/repositories/1team/moxie"
+        },
+        "tags": {
+            "href": "https://api.bitbucket.org/2.0/repositories/1team/moxie/refs/tags"
+        },
+        "watchers": {
+            "href": "https://api.bitbucket.org/2.0/repositories/1team/moxie/watchers"
+        }
+    },
+    "name": "moxie",
+    "owner": {
+        "display_name": "the team",
+        "links": {
+            "avatar": {
+                "href": "https://bitbucket.org/account/1team/avatar/32/"
+            },
+            "html": {
+                "href": "https://bitbucket.org/1team/"
+            },
+            "self": {
+                "href": "https://api.bitbucket.org/2.0/teams/1team"
+            }
+        },
+        "type": "team",
+        "username": "1team",
+        "uuid": "{aa559944-83c9-4963-a9a8-69ac8d9cf5d2}"
+    },
+    "project": {
+        "key": "PROJ",
+        "links": {
+            "avatar": {
+                "href": "https://bitbucket.org/account/user/1team/projects/PROJ/avatar/32"
+            },
+            "html": {
+                "href": "https://bitbucket.org/account/user/1team/projects/PROJ"
+            }
+        },
+        "name": "Untitled project",
+        "type": "project",
+        "uuid": "{ab52aaeb-16ad-4fb0-bb1d-47e4f00367ff}"
+    },
+    "scm": "git",
+    "size": 33348,
+    "type": "repository",
+    "updated_on": "2013-11-08T01:11:03.263237+00:00",
+    "uuid": "{21fa9bf8-b5b2-4891-97ed-d590bad0f871}",
+    "website": ""
+}
