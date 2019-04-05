@@ -1,0 +1,186 @@
+=================================================CHAPTER 1 - DOCKER=================================================
+#Introduction
+1. software stack:
+  - stack:
+    a. front-end components
+    b. back-end workers
+    c. database components
+    d. environment and library dependencies
+  - these components can differ greatly on different platforms
+2. need: make sure that a code running in a development environment works in a testing environment as well (i.e. insuring portability of code during software deployment on every possible platform)
+3. definition:
+  - Docker is a software container platform: i.e. a software that performs operating-system level virtualization called "containerization" at the deployment stage of a software
+  - it allows a developer to package up an application with all its dependencies (tools, libraries, configuration files, etc.) in a single package (bundle) called a container and abstracts from him its portability insuring details (i.e. shipping details)
+  - containers are isolated from each other and communicate via well-defined channels
+4. workflow:
+  - dockerfile: a developer will define the application and its dependencies and requirements in a file called a dockerfile
+  - docker images:
+    a. a dockerfile describes steps to create a Docker image
+    b. Docker images are templates (containing all the dependencies and requirements of the application) used to create docker containers
+    c. they can be stored in online cloud repositories called "Docker Registries" (e.g. Dock Hub) and can be pulled to create containers in any environment (e.g. test environment, staging environment, etc.)
+  - docker containers:
+    a. definition: docker containers are the runtime instances of a Docker image
+5. containerization vs. virtualization:
+  - virtualization:
+    a. a hypervisor (software) is used to create and run multiple virtual machines (i.e. guest OSs) on a host OS
+    b. the virtual machines have their own OS and do not use the host OS -> they are run by multiple OS kernels -> overhead on the host platform
+    c. resource allocation is fixed and does not change as per application needs
+  - containerization:
+    a. a container engine (software) is used to create and run containers (i.e. an application and all its dependencies)
+    b. the containers use the host OS -> they are run by a single OS kernel
+    c. resource allocation is dynamic as per application needs
+    d. a docker container could be run within a virtual machine (i.e. on the virtual machine's OS)
+    e. less overhead, more lightweight and faster than virtual machines
+6. architecture: a client-server architecture:
+  - client: CLI
+  - server:
+    a. a Docker daemon containing all the containers
+    b. can be on the same machine as that of the client or on a different one
+    c. can interact with a Docker Registry
+  - interaction: client: CLI commands or REST API requests -> server
+  - client + server + their components = Docker engine
+  - figure: (cf. images/docker_architecture.png)
+7. advantages:
+  - portability of code on different platforms during deployment
+  - pushing/pulling docker images from docker registries and using them in different environment
+  - built-in VCS similar to Git : commit messages
+  - container isolation:
+    a. no interference with applications running on the same OS
+    b. multiple containers can be executed simultaneously on the same OS
+  - clean container purging: deleting a container deletes also all of its dependencies and requirements along
+
+#Installation on Ubuntu 18.04 from the official Docker repository
+1. link: https://linuxconfig.org/how-to-install-docker-on-ubuntu-18-04-bionic-beaver
+
+#Basic commands
+##Starting, stopping and information about docker server commands
+- starting the docker server: «sudo service docker start»
+- adding permissions to the current user to run docker: «sudo usermod -a -G docker $USER» (then restarting)
+- help on docker commands:
+  a. listing all commands: «docker --help»
+  b. help on a specific command: «docker <command> --help»
+- version of docker:
+  a. short description: «docker --version or docker -v»
+  b. long description: «docker version»
+- information on docker: «docker info»
+- stop the docker server: «sudo service docker stop»
+
+##Docker registry commands
+- login to a docker registry: «docker login [options] [server]»:
+  a. login with a string password: «docker login --password <password>»
+  b. login with a password written to the standard input: «docker login --password-stdin»
+  c. login with a string username: «docker login --username <username>»
+  d. default server value = https://hub.docker.com
+
+##Docker image commands
+- list images: «docker images <options>»
+  a. -a --all: show all images (default behavior)
+  b. --digests: show digests
+  c. -q --quiet: only show numeric ID of a docker image
+  d. -f --filter <filter>: filter output based on provided conditions (e.g. dangling=true or dangling=false)
+  e. dangling image: associated to a docker container
+- remove an image: «docker rmi [<options>] <image>» :
+  a. -f --force: remove an image forcefully
+- create a docker container from an image:
+  a. «docker run <image>[:<image-tag>] [<options>]»
+  b. if the image is not present locally, docker will try and pull a docker image called <image> from the docker registry logged on to
+  c. by default: image-tag = "latest"
+  d. options:
+    * --name <container-name>: assign "container-name" to the created container
+    * -it: create and start the container (run interactively)
+- pull an image from a docker registry: «docker pull <image>[:<image-tag>]»
+- inspect an image as a JSON file: «docker inspect <image>[:<image-tag>]»
+- history of an image: «docker history <image>[:<image-tag>]»
+
+##Docker container commands
+- list container processes:
+  a. running containers: «docker ps»
+  b. all containers: «docker ps -a» or «docker ps --all»
+- start a container: «docker container start <container{ID | NAME}>»
+- pause a container:
+  a. «docker container pause <container{ID | NAME}>»
+  b. all actions on the stdin will be saved in the IO buffer
+- unpause a container:
+  a. «docker container unpause <container{ID | NAME}>»
+  b. all actions saved in the IO buffer will be flushed
+- stop a container: «docker container stop <container{ID | NAME}>»
+- inspect running processes on a container: «docker top <container{ID | NAME}>»
+- inspect memory and IO stats of a container dynamically: «docker stats <container{ID | NAME}>»
+- attach a running container process to the current process: «docker attach <container{ID | NAME}>»
+- remove a container (that's not running): «docker rm <container{ID | NAME}>»
+- kill a running container process: «docker kill <container{ID | NAME}>»
+
+##Docker system commands
+- system memory stats on a running container: «docker stats»
+- system disk stats on a running container: «docker system df»
+- remove unused data: «docker system prune»
+
+#Creating and building dockerfiles
+1. dockerfile: a text file with instructions to automatically build docker images
+2. basic instructions:
+  - FROM <docker-image> | scratch :
+    a. <docker-image>: start from an existing docker image (i.e. base image) to create a custom docker image
+    b. scratch: an empty docker image used for building docker images
+  - MAINTAINER author <email> (optional)
+  - RUN <command> : run the command during docker image creation
+  - CMD ["command1"[, "command2"[, ...]]] : run the command(s) command1[, commands2[, ...]] on the terminal during container creation from the docker image
+  - # this is a comment
+3. process:
+  - create a file named "Dockerfile"
+  - add instructions to the Dockerfile
+  - build the dockerfile to create the docker image: «docker build [-t imageName:imageTag] pathToDockerfile»
+  - run the image to create a container
+
+=================================================CHAPTER 2 - DOCKER COMPOSE=================================================
+#Introduction
+1. definition:
+  - a tool for defining & running multi-container docker applications
+  - uses yaml (Yet Another Markup Language) files to configure application services (docker-compose.yml)
+  - works in all environments (production, staging, development, testing, etc.)
+  - can start all services with a single command: «docker compose up»
+  - can stop all services with a single command: «docker compose down»
+  - can scale up selected services when required
+2. installation:
+  - method 1:
+    a. «curl -L https://github.com/docker/compose/releases/download/1.24.0-rc1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose» (always check for latest release before installing)
+    b. sudo chmod +x /usr/local/bin/docker-compose
+  - method 2 - using pip: pip3 install -U docker-compose
+3. instructions:
+  services:
+
+    web:
+      image: <image-for-web-server>
+
+    database:
+      image: <image-for-db-server>
+
+  version: '3'
+3. process:
+  - create a file named "docker-compose.yml"
+  - check the validity of the file: «docker-compose config»
+  - creating the docker containers and application (in detached mode) and starting all the services: «docker-compose up -d»
+  - stopping the services and the application: «docker-compose down»
+4. scaling services: «docker-compose up -d --scale <service>=<nbContainers>»
+
+=================================================ANNEX - Keywords=================================================
+software container platform
+containerization
+virtualization
+containers
+docker container
+dockerfile
+docker image
+docker Hub/Registry
+docker daemon
+docker engine
+portability
+deployment
+bundle
+package
+VCS
+REST API
+push/pull/commit
+docker build
+docker compose
+YAML
+scaling

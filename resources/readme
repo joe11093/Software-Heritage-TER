@@ -1,0 +1,4 @@
+/articles contient les articles (documents) de recherche liés au TER
+/src contient des snippets de Software Heritage et d'autres outils éventuels
+/tutorials contient les documents tutoriels liés aux outils utilisés dans le TER (python, etc.)
+doc_tutorials_list.txt contient les liens de la documentation, des tutoriels et des articles sur Software Heritage et d'autres outils utilisé

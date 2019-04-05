@@ -1,0 +1,690 @@
+============================ARTICLE - SOFTWARE HERITAGE: WHY AND HOW TO PRESERVE SOFTWARE SOURCE CODE============================
+#Abstract
+##Problems
+1. software is a key component in society => growing attention of its preservation in the digital preservation community
+2. source code:
+  - the only representation of software containing human readable knowledge
+  - a first class citizen in the preservation landscape:
+    a. frequent and increasing permanent losses of source code collections
+    b. taking actions immediately to avoid it
+
+##Solution
+1. Software Heritage: an ambitious initiative to collect, preserve, and share the entire corpus of publicly accessible software source code
+
+#Introduction
+##Problems
+1. ubiquity of software: a rapidly growing part of our cultural, scientific and technical knowledge
+2. problem with executable code:
+  - designed to run on specific hardware and software platforms
+  - once optimized, its code becomes incomprehensible for human beings
+3. software source code and knowledge:
+  - definition: the preferred form [of a program] for making modifications to it [as a developer] (definition of GPL license)
+  - utility: a unique form of knowledge:
+    a. designed to be understood by a human being (the developer)
+    b. easily converted into machine executable code
+  - workflow: routinely evolving to cater new needs and changed contexts
+  - access to entire development history: necessity to really understand software source code
+4. software source code and informational commons:
+  - software commons = the body of software:
+    a. that is widely available and
+    b. can be reused and modified with minimal restrictions
+  - funding principle: source code accessibility
+  - FOSS contributed enormously to nurture this commons
+5. software source code and authoritative voices in CS:
+  - Donald Knuth (Founding father of CS): wrote on the importance of sharing source code as a mean to understand what we want computers to do for us
+  - Len Shustek (board director of the Computer History Museum): "source code provides a view into the mind of the designer"
+  - importance of the source code preservation argued by digital archivists
+6. little action put into the niche of long-term source code preservation:
+  - comprehensive archives are available for a variety of digital objects (e.g. texts, photos, videos, music, web pages, binary executables, etc.)
+  - source code has not yet been given first class citizen in the digital preservation landscape -> the need for a long-term solution for source code preservation
+7. Software Heritage as a solution to fill this gap in the digital archiving landscape
+
+##Plan
+1. sections 2->4: state of the art source code preservation and the mission of Software Heritage in context
+2. sections 5,6: design and intended use cases of Software Heritage
+3. sections 7->9: the data model, architecture, current status and future Road-map of the project
+4. since 2017:
+  - > 3 billion unique source code files
+  - 700 million commits
+  - 50 million software development projects
+
+#Related Work
+1. the execution of legacy software in binary form:
+  - technique: leveraging various forms of virtualization technologies
+  - actors:
+    a. the Internet Archive: web-based emulators to let visitors run in a browser old legacy games drawn from one of their software collections
+    b. the E-ARK and KEEP and others: making emulators portables and viable on the long term
+    c. UNESCO Persist: host organization for all activities related to preserving the executability of binaries on the long term
+2. forensic analysis:
+  - NIST:
+    a. special collection of binaries for forensic analysis use
+    b. the content of the archive is not accessible to the public
+    c. interesting studies on the properties of different cryptographic hashes used on the large collection of software binaries
+3. science and research:
+  - need: handle the sore state of reproducibility of scientific results
+  - technique: storage space for depositing software artifacts
+  - CERN's Zenodo: storage space + GitHub integration to take snapshots of the source code of a software project (without its history)
+4. software engineering:
+  - need: research platform for software engineering researchers (not an archive for preservation)
+  - technique:
+    a. software repositories containing large collections of source code
+    b. databases with event metadata from GitHub
+
+#Software source code at risk
+##The source code diaspora
+1. development of software: with the rise of FOSS:
+  - millions of projects are developed on publicly accessible code hosting platforms (e.g. GitHub, GitLab, SourceForge, Bitbucket, etc.)
+  - myriad of "institutional forges" scattered across the globe
+  - source code downloads offered by developers
+2. distribution of software:
+  - principle:
+    a. software tend to move among code hosting places during its lifetime
+    b. the movement is controlled by current trends or the changing needs and habits of its developer community
+  - means of distribution:
+    a. using code hosting platforms for distribution as well (most forges allow it)
+    b. using archives organized by software ecosystems (e.g. CPAN, CRAN, etc.)
+    c. keeping copies of source code released elsewhere:
+      square- software distributions (e.g. Debian, Fedora, etc.)
+      square- package management systems (e.g. npm, pip, OPAM, etc.)
+3. the need for a single point of entry:
+  - a modern great library of source code
+  - find and monitor the evolution of all publicly available source code, independently of its development and distribution platforms
+
+##The fragility of source code
+1. problem: digital information (including source code) is fragile and can be easily destroyed: (human error, material failure, fire, hacking, etc.)
+2. solution: regular backups in dedicated locations
+3. code hosting platforms as a location for backups
+  - pro: users of code hosting platform don't have to worry about backups since it's the platform's problem not theirs
+  - cons:
+    a. most of these platforms are used for collaboration and record changing primarily and not for long-term code preservation
+    b. digital contents stored on them can be altered and/or deleted over time
+    c. the entire platform can go away (e.g. Glitorious and Google Code, with 1.5 million software projects forced to find a new accommodation since)
+4. the need for a dedicated location for regular long-term backups
+
+##A big scientific instrument for software, or lack thereof
+1. need:
+  - the growing importance of software requires improving its quality, safety and security
+  - we lack a research instrument to analyze the whole body of publicly available source code
+2. properties of such a tool:
+  - a place where all information about software projects (public source code and development history) is made available in a uniform data model
+  - apply "big code" techniques to analyze the entire corpus, independently of:
+    a. the origin of each source code artifact
+    b. the variety of technologies used for hosting and distributing source code
+
+#Mission and challenges
+##Mission
+1. Software Heritage:
+  - project unveiled in June 2016
+  - initial support by INRIA
+2. goal: collect, organize, preserve, and make easily accessible all publicly available source code, independently of where and how it is being developed or distributed
+
+##Challenges
+1. aim:
+  - a common archival infrastructure, supporting multiple use cases and applications
+  - synergies with long-term safeguard against the risk of permanent loss of source code
+2. source code harvesting phase challenges:
+  - challenge 1:
+    a. identify the code hosting places where source code can be found (e.g. variety of well-known development platforms to raw archives linked from obscure web pages)
+    b. solution: building a universal catalog for these code hosting places
+  - challenge 2:
+    a. discover and support the many different protocols used by code hosting platforms to list their contents
+    b. maintain the modifications made to projects hosted there
+    c. solution: best practices for preservation "hygiene" as there's currently no uniformity
+  - challenge 3:
+    a. development histories captured by a wide variety of version control systems (e.g. Git, Subversion, Darcs, Bazaar, CVS, etc.)
+    b. no grand unifying data model for version control systems
+    c. solution: build a grand unifying data model for version control systems and crawl the development histories captured by them
+
+#Core principles
+##Transparency and Free Software
+1. principle of Rosenthal: "in order to ensure long term preservation of any kind of information it is necessary to know the inner workings of all tools used to implement and run the archive"
+2. development and release of Software Heritage:
+  - exclusively FOSS components to build the archive
+  - from user-facing services down to the recipes of software configuration management tools used for the operations of project machines
+3. FOSS development best practices:
+  - development is conducted collaboratively on the project forge
+  - communication happens via publicly accessible media
+
+##Replication all the way down
+1. threats to long-term source code preservation:
+  - technical failures
+  - legal or economic decisions
+2. solution: building a fault-tolerant system
+3. techniques: replication and diversification in the system at all levels:
+  - a geographic network of mirrors
+  - implemented using a variety of storage technologies
+  - in various administrative domains
+  - controlled by different institutions
+  - and located in different jurisdictions
+4. FOSS release of Software Heritage => ease the deployment of mirrors by a variety of actors
+
+##Multi-stakeholder and non-profit
+1. non-profit:
+  - through experience, we deduce that a single for profit entity, however powerful, does not provide sufficient durability
+  - Software Heritage: non profit foundation with the explicit objective of collecting, preserving, and sharing of software commons
+2. multi-stakeholder:
+  - minimizing the risk at the institutional level:
+    a. support is needed by various partners (civil society, industry, governments)
+    b. providing value to all areas which may take advantage of the existence of the archive (e.g. preservation of cultural heritage, research, industry, education)
+3. transparency:
+  - must run according to a well-documented governance
+  - should be accountable to the public by reporting periodically about its activities
+
+##No a priori selection
+1. principle: archive all software projects with no prior selection (as if the answer to the question "what should be archived?")
+2. reasoning:
+  - availability of the technical ability to archive every software project; source code is:
+    a. small in comparison to other digital objects
+    b. information dense and expensive to produce (unlike the millions of cat photos and videos online)
+    c. heavily duplicated/redundant => efficient storage approaches
+  - software is nowadays massively developed in the open => access to the history of software projects since their very early phase
+3. pros:
+  - a precious information for understanding how software is born and evolves, that can be preserved for further important objects
+  - important projects will be pointed by external authorities (emerging from the mass), while less relevant ones will drift into oblivion
+
+##Source code first
+1. ideally: archive software source code in context, i.e.:
+  - as much information about the broader ecosystem:
+    a. project websites
+    b. issues filed in bug tracking systems
+    c. mailing lists
+    d. wikis
+    e. design notes
+    f. executable built for various platforms
+    g. the physical machines and network environment on which the software was run
+  - consequence: virtualization in the future
+2. in practice:
+  - problem:
+    a. resources required for such practices would be enormous
+    b. considering the no a priori selection principle
+  - solution:
+    a. archive entire source code of software projects and
+    b. their full development history as captured by state-of-the art version control systems (VCS)
+  - pros:
+    a. VCS history includes commit message (i.e. precious information that detail why specific changes have been made to a given software at a given moment)
+    b. number of other digital preservation initiatives are already addressing other contextual aspects:
+      square- actors: The Internet Archive, Gmane, Olive, KEEP, E-ARK, PERSIST project
+      square- contributions: project websites, wikis, web-accessible issue trackers, mailing lists, preserving software executables
+3. embracing Unix philosophy :
+  - source code only, where its contribution is most relevant
+  - concretion :
+    a. making archived source code artifacts easy to reference from other digital archives
+    b. using state-of-the-art linked data technologies
+    c. perspective : "semantic wikipedia" of software
+
+##Intrinsic identifiers
+1. introduction :
+  - rage in the community about the "right" identifier for digital objects : mainly focusing on designing digital identifiers for objects that are not necessarily natively digital (e.g. books, articles, etc.)
+  - need for intrinsic identifiers of natively digital objects (i.e. computed only on the basis of their byte content)
+2. Git's approach :
+  - previously : usage of opaque identifiers that require third party authorities to be related to the software they designate
+  - now :
+    a. they use intrinsic identifiers (i.e. that can be computed from the object itself and that are tightly connected to it)
+    b. generation today through the SHA1 cryptographic hash
+  - advantages of intrinsic identifiers :
+    a. they allow to check that an obtained object is exactly the one that was requested without having to involve third party authorities
+    b. natively support integrity checks : we can detect if an object with an intrinsic identifier has been altered if we get a mismatch between its current content and its previously computed identifier => very good property for any archival system
+3. Software Heritage's approach :
+  - intrinsic identifiers for all archived source code
+  - non intrinsic identifiers for pieces of information that are not natively digital (e.g. author or project names, metadata, ontologies, etc.)
+  - long term preservation of the interconnected network of knowledge built by the source code => intrinsic identifiers best suited for the job
+
+##Facts and provenance
+1. provenance in Software Heritage : full provenance information archival, following best practices => always see what was stored, when and where
+2. facts : to become a shared and trusted knowledge, only archival of qualified facts about software :
+  a. no storing of bare metadata, e.g. Language=C++, License=GPL3
+  b. only storing of qualified metadata, e.g. :
+    square- "version 3.1 of the program pygments invoked with a given command line on this particular file reported as written in C++;"
+    square- "version 2.6 of FOSSology license detection tool, ran with a given configuration(stored), reported the file as being released under the terms of version 3 of the GPL license"
+
+##Minimalism
+1. huge ramifications of the daunting task taken by Software Heritage
+2. design philosophy :
+  - building a core infrastructure whose objective is :
+    a. collecting,
+    b. organizing,
+    c. preserving and
+    d. sharing source code
+  - establishing collaborations with any initiatives that may add value on top or on the side of this infrastructure
+
+#Applications and use cases
+##Introduction
+1. a universal archive of software source code => wealth of applications in a variety of areas broader than preservation for its own sake
+2. such applications are relevant to the success of the archive itself, because long-term preservation carries significant costs:
+  - chances to meet them will be much higher if there are more use cases than just preservation
+  - the cost may then be shared among a broader public of potential archive users
+
+##Cultural heritage
+1. recognition as a first class citizen in the area of cultural heritage:
+  - a noble form of human production that needs to be preserved, studied, curated and shared
+  - an essential component of a strategy to defend against digital dark age scenarios (i.e. in which one might lose track of how to make sense of digital data created by software currently in production)
+2. consequence: an agreement established with the UNESCO on source code preservation, whose main actions will be carried out in the context of Software Heritage
+
+##Science
+1. the issue of reproducibility in modern scientific results :
+  - the three main pillars are :
+    a. scientific articles: describing the results
+    b. data sets used or produced and
+    c. the software that embodies the logic behind the data transformation
+  - initiatives for two pillars :
+    a. scientific articles: OpenAire (i.e. open access repositories)
+    b. data sets: Zenodo (i.e. open data set repositories)
+3. Software Heritage as a central archive for all publicly available source code:
+  - disparate and non-centralized initiatives for the third pillar => possible candidate to fulfill the position (i.e. open source repositories)
+  - all the history of public software development is made available in a uniform data model =>
+    a. unprecedented big data analysis on the code itself and the software development process
+    b. new potential for Mining Software Repository research
+
+##Industry
+1. industry is growing more and more dependent on FOSS components in all kinds of products (economic and technical reasons)
+2. problem: the new tidal wave of change in IT made it harder to identify which specific variants of FOSS components were used in a given product as all of the below need to be verified:
+  - ensuring technical compatibility among software components
+  - ensuring compliance with several software licenses
+  - track software supply chain
+  - bills of materials
+3. Software Heritage as a solution :
+  - intrinsic identifiers :
+    a. can precisely pinpoint software versions (like a part number for a FOSS component), independently of the original vendor or intermediate distributor
+    b. consequence : referencing in quality processes and verified for correctness independently from Software Heritage
+  - open provenance knowledge :
+    a. keeping track of which software component at what granularity (from project release to individual source files) has been found where and when on the Internet
+    b. consequences:
+      square- referencing and augmenting with other software-related facts (e.g. license information)
+      square- used by software build processes and tools => cope with current development challenges
+4. support and sponsors that provide initial evidence that this potential is being understood: Microsoft, Intel, Huawei, Nokia
+
+#Data model
+1. Data model centered around storing "software artifacts" and their corresponding "provenance information", regardless of data collection:
+  - software artifact: a key component in the Software Heritage archive
+  - provenance information: full information about where the software was found
+
+##Source code hosting places
+1. code hosting platforms: stored in a curative list, to be crawled
+2. types of code hosting platforms:
+  - collaborative development forges: e.g. GitHub, Bitbucket, etc.
+  - package manager repositories: e.g. CPAN, npm, etc.
+  - FOSS software distributions: e.g. Debian, Fedora, FreeBSDn etc.
+  - other types: e.g. URLs of personal or institutional project collections not hosted on forges
+3. listing of code hosting platforms:
+  - currently entirely manual
+  - can be semi-automatic:
+    a. manual aspect: entries suggested by archivists and/or concerned users
+    b. automatic aspect: Web crawlers: e.g. detecting the presence of source code to enrich the list
+    c. review process: semi-automated process that needs to pass before a hosting place can be listed
+
+##Software artifacts
+1. process:
+  - hypothesis: once code hosting platforms are known, periodic checks to archive missing software artifacts
+  - basis: in general, any software distribution mechanism will host multiple releases of a given product at any given time:
+    a. VCS: natural behavior
+    b. software packages: current previous versions of packages (current and previous snapshots of corresponding software)
+  - consequence: generalizing VCS and source package formats -> recurrent software artifact types that:
+    a. are commonly on code hosting platforms
+    b. constitute the basic ingredients of the Software Heritage archive
+2. types :
+  - file contents (Blobs):
+    a. definition: raw content of source code (i.e. sequence of bytes), without file names or any other metadata
+    b. recurrent:
+      square- across different versions of the same software
+      square- different directories of the same project
+      square- different projects
+  - directories:
+    a. definition: a list of named directory entries pointing to other artifacts (file contents or sub-directories)
+    b. metadata: entries are associated to arbitrary metadata :
+      square- varying with technologies
+      square- e.g. permission bits, modification timestamps, etc.
+  - revisions (Commits):
+    a. software development: a time-indexed series of copies of a single "root" directory that contains the entire project source code
+    b. software evolution: modifying the content of one or more files in that directory and recording their change
+    c. definition: each recorded copy of a the root directory is called a revision:
+      square- directory with arbitrary metadata
+      square- manually added metadata: commit message
+      square- automatically added metadata: timestamps, preceding versions, etc.
+  - releases (Tags):
+    a. definition: a release is a revision achieving a project milestone:
+      square- each release points to the last commit in project history corresponding to it along with arbitrary metadata
+      square- metadata examples: release name, release version, release message, cryptographic signatures, etc.
+
+##Provenance information
+1. process: the crawling-related information are stored as provenance information in the Software Heritage archive
+2. types:
+  - origins:
+    a. definition: software origins are fine grained references to where source code artifacts archived by Software Heritage were retrieved from
+    b. representation: <type, url> pairs:
+      square- type: the kind of software origin (e.g. git, svn, dsc (Debian source packages))
+      square- url: canonical URL (e.g. the address at which one can git clone a repository or wget a source tarball)
+  - projects:
+    a. definition: abstract entities to precise software origins that:
+      square- are arbitrarily nestable in a versioned project/sub-project hierarchy
+      square- release several development resources (e.g. websites, issue trackers, mailing lists, software origins)
+      square- can be associated to arbitrary metadata and software origins (i.e. where their source code can be found)
+  - snapshots:
+    a. software origins and the state of a development project: any kind of software origin offers multiple pointers to the current state of a development project:
+      square- VCS: branches (e.g. master, development or feature branches)
+      square- package distribution: suites (i.e. different maturity levels of individual packages (e.g. stable, development, etc.))
+    b. definition: a snapshot of a given software origin at a given time records all entry points found there and what they were pointing at
+    c. examples:
+      square- VCS: a snapshot object that tracks the master branch commits at any given time
+      square- FOSS distribution: a snapshot object that tracks the most recent release of a given package in the stable suite
+  - visits:
+    a. role: linking software origins and snapshots together
+    b. definition: every time an origin is consulted, a new visit object is created, recording:
+      square- when the visit happened (according to Software Heritage clock)
+      square- the full snapshot of the state of the software origin
+
+##Data structure
+1. fact: source code is duplicated:
+  - code hosting diaspora
+  - vendoring: copy/paste of entire external FOSS components into other software products
+  - usually a very small number of files/directories are modified by a single commit -> large overlap between revisions of the same project
+  - emergence of DVCS (Distributed VCS):
+    a. definition: natively work by replicating entire repository copies around
+    b. example: GitHub pull requests: creation of an additional repository copy at each change done by a new developer
+  - migration from one VCS to another: e.g. Subversion (SVN) -> Git resulting in additional copies, but in different distribution formats, of the very same development histories
+  - remark: this trend is going to be even more prominent in the future, due to the decreasing costs of storage and bandwidth
+2. data structure:
+  - principle:
+    a. deduplication should be used for long term preservation and storage efficiency
+    b. software artifacts that need to be deduplicated: file contents, directories, revisions, releases, snapshots
+  - model:
+    a. the Software Heritage archive is a Merkel DAG (Direct Acyclic Graph) (cf. Figure 2 in article)
+    b. remark: the Software Heritage archive is not a tree, because the line of revisions nodes might be forked and merged back
+  - nodes:
+    a. each artifact in the archive hierarchy, from blobs to entire snapshots, is a node
+    b. each node contains all metadata that are specific to the node itself (e.g. commit messages, timestamps, file names)
+    c. each node is identified by an intrinsic identifier:
+      square- computed from the node itself (i.e. a cryptographic hash of the node content)
+      square- node content: node-specific metadata and the identifiers of child nodes represented in a canonical form
+  - edges between nodes:
+    a. directory entries point to other directories or file contents
+    b. revisions point to directories and previous revisions
+    c. releases point to revisions
+    d. snapshots point to revisions and releases
+  - example of a revision node in the Software Heritage Merkel DAG (cf. Figure 3 in article)
+  - properties inherited from the Merkel data structure:
+    a. built-in deduplication:
+      square- hash property: any software artifact encountered gets added to the archive, only if a corresponding node with a matching intrinsic identifier is not already available in the graph
+      square- consequence: file contents, directories, project snapshots are deduplicated -> storage costs only once
+    b. side effect property: the entire development history of all source code archived in Software Heritage is available as a unified whole -> code reuse across different projects or software origins readily available
+
+#Architecture and data flow
+Requirement: an architecture suitable for ingesting source code artifacts into the data model defined for Software Heritage
+
+##Data Flow Ingestion
+1. definition: periodically crawling a set of "leads" (i.e. curated list of code hosting places) for content to archive and further leads (like a search engine)
+2. architecture: split into two conceptual phases (listing and loading) -> facilitate extensibility and collaboration (cf. Figure 4 in article)
+
+##Listing
+1. definition:
+  - input: a single code hosting platform (e.g. GitHub, Bitbucket, PyPI, Debian)
+  - role: enumerating all software origins (e.g. individual Git/SVN repositories, individual package names, etc.) found at listing time
+2. implementation: dedicated lister software components for each different type of platform (e.g. dedicated listers for GitHub, Bitbucket, etc.)
+3. listing disciplines:
+  - full listing:
+    a. collecting the entire list of origins available at a given code hosting platform at once
+    b. pro: making sure that no origin is being overlooked
+    c. con: costly if done too frequently on large platforms (e.g. as of 2017, GitHub has more than 55 million Git repositories)
+  - incremental listing:
+    a. collecting only the new origins since the last listing
+    b. pro: quickly update the list of origins available at a code hosting platform
+    c. remark: to be used after a full listing has been executed
+4. listing styles:
+  - pull style: the archive periodically checks the code hosting platforms to list origins
+  - push style:
+    a. code hosting platforms, properly configured to work with Software Heritage, contact back the archive at each change in the list of origins
+    b. pro: minimize the lag between the appearance of a new software origin and its ingestion in Software Heritage -> optimization on top of the push style
+    c. con: risk of losing notifications -> software origins not being considered for archival
+
+##Loading
+1. definition: actual ingestion in the archive of source code found at known software origins: extraction of software artifacts in software origins and adding them to the archive
+2. implementation: specific to the technology used to distribute source code:
+  - one loader for each type of VCS (e.g. Git, SVN, Mercurial, etc.)
+  - one loader for each source package format (e.g. Debian source packages, source RPMs, tarballs, etc.)
+3. native deduplication w.r.t. the entire archive:
+  - any artifact (blob, revision, etc.) encountered at any origin will be added to the archive only if a corresponding node cannot be found in the archive as a whole
+4. deduplication use case:
+  - Git repository used for the development of the Linux kernel:
+    a. 2 GB on disks
+    b. more than 600,000 revisions
+    c. thousands of slightly different copies available on GitHub
+  - first encounter ever: the Git loader will load all its software artifacts (file contents, revisions, etc.) into the Software Heritage archive
+  - next encounter of an identical repository: nothing will be added at all to the archive
+  - next encounter with a slightly different repository (e.g. a repository containing a dozen additional commits not yet integrated in the official release of Linux): only the corresponding revision nodes, new file contents and directories pointed by them will be loaded into the archive
+
+##Scheduling
+1. definition:
+  - listing and loading happen periodically on a schedule
+  - keeping track of when the next listing/loading actions need to happen:
+    a. for each code hosting platform (for listers)
+    b. for each software origin (for loaders)
+  - remark:
+    a. even when push-style listing is performed, we still want to periodically list pull-style to stay on the safe side
+    b. scheduling is not always needed for listing
+2. update lag vs. resource consumption:
+  - problem:
+    a. number of hosting platforms to list is not enormous, but the amount of software origins to load into the archive can easily reach hundreds of millions given the size of major code hosting platforms
+    b. listing/loading too frequently from that many code hosting platforms -> unwise resource consumption and unwelcome to maintainers of those platforms
+  - solution: adaptive scheduling discipline -> balance between update lag and resource consumption
+3. adaptive scheduling:
+  - fruitful actions:
+    a. each run of a periodic action (listing/loading) can be fruitful, if it resulted in new information since the last visit, or not
+    b. fruitful listing: the discovery of new software origins
+    c. fruitful loading: the overall state of the consulted origins differs from the last observed one
+  - process:
+    a. if a scheduled action has been fruitful -> the consulted site has seen activity since the last visit -> increase the frequency of future visits
+    b. else (no activity) -> decrease the frequency of future visits
+    c. exponential backoff strategy: if activity is noticed -> visit frequency is doubled, else visit frequency is halved
+4. some numbers:
+  - the fastest consultation frequency of a site: twice a day (i.e. every 12 hours)
+  - the slowest consultation frequency of a site: every 64 days
+  - large code hosting platforms: ~90% of hosted repositories quickly fall to the slowest update frequency (i.e. no activity in 2-month time windows), and only ~10% see more activity than that
+
+##Archive
+1. logical representation: Merkel DAG data structure
+2. physical storage: different technologies due to the differences in size requirements for storing different parts of the graph
+3. blob nodes storage:
+  - storage space: occupy the most space as they contain the full content of all archived source code files
+  - storage technology:
+    a. key-value object storage (key = intrinsic identifier of the Merkel DAG node)
+    b. pros:
+      square- horizontal scaling: distribution of the object storage over multiple machines -> performance and redundancy
+      square- key-value paradigm is very popular among current storage technologies -> easily host copies of the bulk of the archive on premise/public cloud offerings
+4. rest of the DAG storage:
+  - RDBMS (Postgres):
+    a. roughly one table per node type
+    b. key: intrinsic identifier of Merkel DAG node
+    c. pros:
+      square- horizontal scaling across multiple servers
+      square- master/slave replication and point-in-time recovery -> performance and recovery
+5. hash object storage:
+  - problem: hash collisions if two different objects hash to the same intrinsic identifier -> risk of storing only one of the node
+  - solution: multiple cryptographic checksums with unicity constraints on each of them to detect collisions before adding new software artifact to the archive
+  - types of checksums:
+    a. used: SHA1, SHA256, "salted" SHA1 checksums (in the style of what Git does)
+    b. in the process of adding: BLAKE2 checksums
+6. node mirroring:
+  - change feed:
+    a. each type of node is associated to a change feed that takes note of all changes performed to the set of objects in the archive
+    b. persistent
+    c. the archive is append-only -> under normal circumstances, each feed will only list additions of new objects as soon as they are ingested into the archive
+  - pro of using change feeds: ideal for mirror operators -> after a full mirror step, can cheaply remain up to date w.r.t. the main archive
+7. retention policy:
+  - current retention state:
+    a. two in-house mirrors of the entire object storage
+    b. a third copy currently being populated on a public cloud
+  - retention policy example: each file content must exist in at least 3 copies
+  - process: a software component of the archive:
+    a. keeps track of the number of copies of a given file content and where each of them is
+    b. periodically swipe all known objects for adherence to the policy
+    c. when fewer copies than desired exists, additional copies as needed to satisfy the retention policy are asynchronously made by the archiver
+8. object corruption automatic healing:
+  - example of an object corruption scenario: storage media decay
+  - process: a software component of the archive:
+    a. periodically checks each copy of all known objects: random selection at a suitable frequency
+    b. recomputes the intrinsic identifier of each copy and compares it with the known one to verify its integrity
+    c. in case of a mismatch:
+      square- all known copies of the object are checked on-the-fly again
+      square- assuming one pristine copy is found, it will be used to overwrite corrupted copies -> automatic healing
+
+#Current status & road-map
+Software heritage grows incrementally: new listers/loaders get implemented periodically and run to ingest new content
+
+##Listers
+1. implemented listers:
+  - GitHub and Bitbucket listers: full and incremental listing (put in production)
+  - consequence: refactoring of common code -> lister helper component to easily implement listers for other code hosting platforms
+2. upcoming listers:
+  - FusionForge, Debian and Debian-based distributions
+  - bare bone FTP sites distributing tarballs
+
+##Loaders
+1. implemented loaders:  Git, SVN, tarballs and Debian source packages
+2. upcoming loader: Mercurial
+
+##Archive coverage
+1. GitHub archiving:
+  - full archiving once
+  - routinely maintain GitHub up-to-date: more than 50 million Git repositories
+2. Debian archiving:
+  - all releases of Debian packages (2005-2015)
+  - full archiving once
+3. other archives:
+  - as of August 2015: all current and historical releases of GNU projects
+  - full copies of all repositories previously available on Glitorious and Google Code: ongoing ingestion into Software Heritage
+
+###Storage
+1. Physical aspect:
+  - Software Heritage object storage:
+    a. 3 copies
+    b. ~150 TB/copy
+    c. compression rate: 2x (i.e. 300 TB of raw source code content)
+  - RDBMS (rest of the graph):
+    a. 2 copies
+    b. ~5 TB/copy
+    c. point-in-time recovery over a 2-week time window
+2. Logical aspect:
+  - nodes: ~5 billions
+  - edges: ~50 billions
+  - more than half of the nodes are unique:
+    a. file content nodes: ~3 billions
+    b. revision nodes: ~750 millions
+    c. origin nodes: ~55 millions
+
+##Features
+1. available features:
+  - content lookup:
+    a. check whether specific file contents have been archived by Software Heritage
+    b. uploading file contents or directly entering their checksum from Software Heritage homepage
+  - browsing via API: Web-based API, allowing developers to navigate through the entire Software Archive archive as a graph :
+      a. look up individual nodes (revisions, releases, directories, etc.)
+      b. access their metadata
+      c. follow links to other nodes
+      d. download individual file contents
+      e. visit information: reporting when a given software origin has been visited and its status at the time
+      f. documentation and concrete examples for practical use online
+2. road-map features to be integrated incrementally:
+  - web browsing: equivalent to API browsing but for non-developer Web users; i.e. GUI:
+    a. state-of-the-art interfaces for browsing the contents of individual VCS
+    b. tailored to navigate a much larger archive
+  - provenance information: reverse lookup: all the places and timestamps where a given source code artifact has been found
+  - metadata search: searches based on project-level metadata:
+    a. simple information: project name, hosting place, etc.
+    b. substantial information: entity behind the project, license, etc.
+  - content search: searches based on the content of archived files:
+    a. full-text search
+    b. raw character sequences
+    c. syntax trees for a given programming language
+
+============================ANNEX - KEYWORDS============================
+Software Heritage
+FOSS
+non-profit
+software
+source code
+development history
+development
+distribution
+code hosting platforms
+forges
+software ecosystem archives
+software distributions
+package management systems
+version control systems
+VCS
+universal archive
+transparency
+minimalism
+fault-tolerance
+extensibility
+collaboration
+universal catalog
+development history crawling
+grand unifying data model
+intrinsic identifiers
+provenance
+qualifier metadata
+collection
+organization
+sharing
+long-term preservation
+software artifact
+file contents
+BLOB
+directories
+revision
+release
+software origin
+software project
+snapshot
+visit
+Merkel DAG
+RDBMS
+ingestion
+lister
+full listing
+incremental listing
+pull listing
+push listing
+lister helper
+loader
+deduplication
+scheduler
+update lag
+resource consumption
+fruitful action
+exponential backoff
+universal archive
+hash object storage
+multiple checksums
+node mirroring
+horizontal scaling
+retention policy
+automatic object corruption healing
+GitHub
+GitLab
+BitBucket
+ForgeFusion
+Glitorious
+Google Code
+content lookup
+browsing API
+web browsing
+provenance information
+metadata search
+content search
+Debian
+NPM
+PyPI
+OpenHub
+CPAN
+Debian
+GNU project
+Git
+SVN
+Mercurial
+tarballs
+SHA1
+salted SHA1
+SHA256
+BLAKE2
+Postgres

@@ -1,0 +1,34 @@
+===============================SOFTWARE HERITAGE DOCUMENTATION===============================
+#Architecture
+1. access to SWH archive :
+  - Web App (Django)
+  - REST API
+2. components :
+  - front-end APIS :
+    a. Scheduler API
+    b. Deposit API
+    c. Vault API
+    d. Indexer API
+    e. Storage API
+    f. each of them is connected to a postgresql RDBMS
+    g. all of postgresql RDBMSs are connected to the journal
+    h. the Storage API interacts with the objStorage API which is reponsible for the actual object storage
+  - back-end components :
+  - Celery Broker (rabbitmq server) handling tasks :
+    a. schedulers :
+      * Listener scheduler
+      * Runner scheduler
+    b. workers :
+      * Lister workers
+      * Loader workers
+      * Indexer workers
+3. listers :
+  - a type of task aiming at scraping a code hosting platform to gather all the source code repositories
+  - for each source code repository, a loader task is created
+  - sequence diagram example : (cf. images/lister_example_sequence_diagram.png)
+4. loaders :
+  - a type of task aiming at importing or updating a source code repository
+  - they insert blobs in the object storage and insert nodes and edges in the Merkel DAG
+  - sequence diagram example : (cf. images/loader_example_sequence_diagram.png)
+5. indexer : a type of task aiming at crawling the content of the archive to extract derived information (mimetype, etc.)
+6. figure : (cf. images/swh_general_architecture.svg)

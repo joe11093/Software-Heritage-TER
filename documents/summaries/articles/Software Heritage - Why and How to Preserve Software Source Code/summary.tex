@@ -1,0 +1,1628 @@
+
+% Default to the notebook output style
+
+
+
+
+% Inherit from the specified cell style.
+
+
+
+
+
+\documentclass[11pt]{article}
+
+
+
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics
+                         % to support a larger range
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{mathrsfs}
+
+
+
+
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+
+
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{Software Heritage -- Why and How to Preserve Software Source Code}
+
+
+
+
+
+
+    % Pygments definitions
+
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+
+
+
+    \begin{document}
+
+
+    \maketitle
+    \tableofcontents
+    \newpage
+
+    \hypertarget{software-source-code-at-risk}{%
+\section{Software source code at
+risk}\label{software-source-code-at-risk}}
+
+\hypertarget{the-source-code-diaspora}{%
+\subsection{The source code diaspora}\label{the-source-code-diaspora}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{development of software}: with the rise of FOSS:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    millions of projects are developed on \textbf{publicly accessible
+    code hosting platforms} (\emph{e.g.~GitHub, GitLab, SourceForge,
+    Bitbucket, etc.})
+  \item
+    myriad of ``\textbf{institutional forges}'' scattered across the
+    globe
+  \item
+    \textbf{source code downloads} offered by \textbf{developers}
+  \end{itemize}
+\item
+  \textbf{distribution of software}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{principle}:
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      software tend to \emph{move} among \textbf{code hosting places}
+      during its lifetime
+    \item
+      the movement is controlled by \emph{current trends} or the
+      \emph{changing needs and habits} of its \textbf{developer
+      community}
+    \end{enumerate}
+  \item
+    \textbf{means of distribution}:
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      using \textbf{code hosting platforms} for \textbf{distribution} as
+      well (\emph{most forges allow it})
+    \item
+      using \textbf{archives organized by software ecosystems}
+      (\emph{e.g.~CPAN, CRAN, etc.})
+    \item
+      keeping \textbf{copies of source code released elsewhere}:
+
+      \begin{itemize}
+      \tightlist
+      \item
+        \textbf{software distributions} (\emph{e.g.~Debian, Fedora,
+        etc.})
+      \item
+        \textbf{package management systems} (\emph{e.g.~npm, pip, OPAM,
+        etc.})
+      \end{itemize}
+    \end{enumerate}
+  \end{itemize}
+\end{enumerate}
+
+\hypertarget{the-fragility-of-source-code}{%
+\subsection{The fragility of source
+code}\label{the-fragility-of-source-code}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{problem}: \textbf{digital information} (\emph{including source
+  code}) is \textbf{fragile} and can be \textbf{easily destroyed}:
+  (\emph{human error, material failure, fire, hacking, etc.})
+\item
+  \textbf{solution}: \textbf{regular backups} in dedicated locations
+\item
+  \textbf{code hosting platforms as a location for backups}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{pro}: users of code hosting platform don't have to worry
+    about backups since it's \textbf{the platform's problem not theirs}
+  \item
+    \textbf{cons}:
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      most of these platforms are used for \textbf{collaboration and
+      record changing primarily} and not for \textbf{long-term code
+      preservation}
+    \item
+      \textbf{digital contents} stored on them can be \textbf{altered
+      and/or deleted over time}
+    \item
+      the \textbf{entire platform can go away} (\emph{e.g.~Glitorious
+      and Google Code, with 1.5 million software projects forced to find
+      a new accommodation since})
+    \end{enumerate}
+  \end{itemize}
+\end{enumerate}
+
+\hypertarget{mission-and-challenges}{%
+\section{Mission and challenges}\label{mission-and-challenges}}
+
+\hypertarget{mission}{%
+\subsection{Mission}\label{mission}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Software Heritage}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    project unveiled in June 2016
+  \item
+    initial support by \textbf{INRIA}
+  \end{itemize}
+\item
+  \textbf{goal}: \emph{collect, organize, preserve, and make easily
+  accessible all publicly available source code, independently of where
+  and how it is being developed or distributed}
+\end{enumerate}
+
+\hypertarget{source-code-harvesting-challenges}{%
+\subsection{Source code harvesting
+challenges}\label{source-code-harvesting-challenges}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \emph{challenge 1}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{identify the code hosting places where source code can be
+    found} (\emph{e.g.~variety of well-known development platforms to
+    raw archives linked from obscure web pages})
+  \item
+    \textbf{solution}: building a \textbf{universal catalog} for these
+    \textbf{code hosting places}
+  \end{itemize}
+\item
+  \emph{challenge 2}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{discover and support} the \textbf{many different protocols}
+    used by code \textbf{hosting platforms} to list their contents
+  \item
+    \textbf{maintain the modifications made to projects} hosted there
+  \item
+    \textbf{solution}: \emph{best practices for preservation
+    ``hygiene''} as there's currently \textbf{no uniformity}
+  \end{itemize}
+\item
+  \emph{challenge 3}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{development histories captured by a wide variety of version
+    control systems} (\emph{e.g.~Git, Subversion, Darcs, Bazaar, CVS,
+    etc.})
+  \item
+    no grand \textbf{unifying data model} for \textbf{version control
+    systems}
+  \item
+    \textbf{solution}: \textbf{build a grand unifying data model} for
+    \textbf{version control systems} and \textbf{crawl the development
+    histories captured by them}
+  \end{itemize}
+\end{enumerate}
+
+\hypertarget{data-model}{%
+\section{Data model}\label{data-model}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Data model centered around storing ``\textbf{software artifacts}'' and
+  their corresponding ``\textbf{provenance information}'', regardless of
+  \textbf{data collection}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{software artifact}: a \textbf{key component} in the
+    \textbf{Software Heritage archive}
+  \item
+    \textbf{provenance information}: \textbf{full information about
+    where the software was found}
+  \end{itemize}
+\end{enumerate}
+
+\hypertarget{source-code-hosting-places}{%
+\subsection{Source code hosting
+places}\label{source-code-hosting-places}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{code hosting platforms}: stored in a \textbf{curative list},
+  to be \textbf{crawled}
+\item
+  \textbf{types of code hosting platforms}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{collaborative development forges}: \emph{e.g.~GitHub,
+    Bitbucket, etc.}
+  \item
+    \textbf{package manager repositories}: \emph{e.g.~CPAN, npm, etc.}
+  \item
+    \textbf{FOSS software distributions}: \emph{e.g.~Debian, Fedora,
+    FreeBSDn etc.}
+  \item
+    \textbf{other types}: \emph{e.g.~URLs of personal or institutional
+    project collections not hosted on forges}
+  \end{itemize}
+\item
+  \textbf{listing of code hosting platforms}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    currently \textbf{entirely manual}
+  \item
+    can be \textbf{semi-automatic}:
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      \textbf{manual aspect}: entries suggested by \textbf{archivists
+      and/or concerned users}
+    \item
+      \textbf{automatic aspect}: \textbf{Web crawlers}:
+      \emph{e.g.~detecting the presence of source code to enrich the
+      list}
+    \item
+      \textbf{review process}: \textbf{semi-automated process} that
+      needs to pass \textbf{before a hosting place can be listed}
+    \end{enumerate}
+  \end{itemize}
+\end{enumerate}
+
+\hypertarget{software-artifacts}{%
+\subsection{Software artifacts}\label{software-artifacts}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{process}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{hypothesis}: once \textbf{code hosting platforms} are known,
+    \textbf{periodic checks} to \textbf{archive missing software
+    artifacts}
+  \item
+    \textbf{basis}: in general, any \textbf{software distribution
+    mechanism} will host \textbf{multiple releases} of a \textbf{given
+    product} at \textbf{any given time}:
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      \textbf{VCS}: \emph{natural behavior}
+    \item
+      \textbf{software packages}: \textbf{current and previous versions
+      of packages} (\emph{i.e.~current and previous snapshots of
+      corresponding software})
+    \end{enumerate}
+  \item
+    \textbf{consequence}: \emph{generalizing VCS and source package
+    formats} -\textgreater{} \textbf{recurrent software artifact types}
+    that:
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      are commonly on \textbf{code hosting platforms}
+    \item
+      constitute the \textbf{basic ingredients} of the \textbf{Software
+      Heritage archive}
+    \end{enumerate}
+  \end{itemize}
+\item
+  \textbf{types} :
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{file\ contents} (\texttt{Blobs}):
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      \textbf{definition}: \textbf{raw content of source code}
+      (\emph{i.e.~sequence of bytes}), \textbf{without file names or any
+      other metadata}
+    \item
+      \textbf{recurrent}:
+
+      \begin{itemize}
+      \tightlist
+      \item
+        across \textbf{different versions of the same software}
+      \item
+        \textbf{different directories of the same project}
+      \item
+        \textbf{different projects}
+      \end{itemize}
+    \end{enumerate}
+  \item
+    \texttt{directories}:
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      \textbf{definition}: a \textbf{list of named directory entries}
+      pointing to \textbf{other artifacts} (\emph{file contents or
+      sub-directories})
+    \item
+      \textbf{metadata}: \textbf{entries are associated to arbitrary
+      metadata} :
+
+      \begin{itemize}
+      \tightlist
+      \item
+        \textbf{varying with technologies}
+      \item
+        \emph{e.g.~permission bits, modification timestamps, etc.}
+      \end{itemize}
+    \end{enumerate}
+  \item
+    \texttt{revisions} (\texttt{Commits}):
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      \textbf{software development}: \emph{a time-indexed series of
+      copies of a single ``root'' directory that contains the entire
+      project source code}
+    \item
+      \textbf{software evolution}: \emph{modifying the content of one or
+      more files in that directory and recording their change}
+    \item
+      \textbf{definition}: each \textbf{recorded copy} of a the
+      \textbf{root directory} is called a \texttt{revision}:
+
+      \begin{itemize}
+      \tightlist
+      \item
+        \textbf{directory with arbitrary metadata}
+      \item
+        \textbf{manually added metadata}: \emph{commit message}
+      \item
+        \textbf{automatically added metadata}: \emph{timestamps,
+        preceding versions, etc.}
+      \end{itemize}
+    \end{enumerate}
+  \item
+    \texttt{releases} (\texttt{Tags}): a \texttt{release} is a
+    \texttt{revision} \textbf{achieving a project milestone}:
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      each \texttt{release} points to the \textbf{last commit in project
+      history} corresponding to it along with \textbf{arbitrary
+      metadata}
+    \item
+      \textbf{metadata examples}: \emph{release name, release version,
+      release message, cryptographic signatures, etc.}
+    \end{enumerate}
+  \end{itemize}
+\end{enumerate}
+
+\hypertarget{provenance-information}{%
+\subsection{Provenance information}\label{provenance-information}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{process}: the \textbf{crawling-related information} are stored
+  as \textbf{provenance information} in the \textbf{Software Heritage
+  archive}
+\item
+  \textbf{types}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{origins}:
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      \textbf{definition}: \texttt{software\ origins} are \textbf{fine
+      grained references} to where \textbf{source code artifacts
+      archived by Software Heritage were retrieved from}
+    \item
+      \textbf{representation}:
+      \texttt{\textless{}type,\ url\textgreater{}} \textbf{pairs}:
+
+      \begin{itemize}
+      \tightlist
+      \item
+        \textbf{type}: \textbf{the kind} of \texttt{software\ origin}
+        (\emph{e.g.~Git, svn, dsc (Debian source packages)})
+      \item
+        \textbf{url}: \textbf{canonical URL} (\emph{e.g.~the address at
+        which one can git clone a repository or wget a source tarball})
+      \end{itemize}
+    \end{enumerate}
+  \item
+    \texttt{projects}: \textbf{abstract entities} to precise
+    \texttt{software\ origins} that:
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      are \textbf{arbitrarily nestable in a versioned
+      project/sub-project hierarchy}
+    \item
+      \textbf{release several development resources}
+      (\emph{e.g.~websites, issue trackers, mailing lists, etc.})
+    \item
+      can be associated to \textbf{arbitrary metadata} and
+      \texttt{software\ origins} (\emph{i.e.~where their source code can
+      be found})
+    \end{enumerate}
+  \item
+    \texttt{snapshots}:
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      \texttt{software\ origins} and the \textbf{state of a development
+      project}: any kind of \texttt{software\ origin} offers
+      \textbf{multiple pointers} to the \textbf{current state of a
+      development project}:
+
+      \begin{itemize}
+      \tightlist
+      \item
+        \textbf{VCS}: \textbf{branches} (\emph{e.g.~master, development
+        or feature branches})
+      \item
+        \textbf{package distribution}: \textbf{suites}
+        (\emph{i.e.~different maturity levels of individual packages
+        (e.g.~stable, development, etc.)})
+      \end{itemize}
+    \item
+      \textbf{definition}: a \texttt{snapshot} of a given
+      \texttt{software\ origin} at a \textbf{given time* records all
+      entry points found there and what they were pointing at}
+    \item
+      \textbf{examples}:
+
+      \begin{itemize}
+      \tightlist
+      \item
+        \textbf{VCS}: a \texttt{snapshot} object that \emph{tracks the
+        master branch commits at any given time}
+      \item
+        \textbf{FOSS distribution}: a \texttt{snapshot} object that
+        \textbf{tracks the most recent release of a given package in the
+        stable suite}
+      \end{itemize}
+    \end{enumerate}
+  \item
+    \texttt{visits}:
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      \textbf{role}: \textbf{linking} \texttt{software\ origins} and
+      \texttt{snapshots} together
+    \item
+      \textbf{definition}: \textbf{every time} an \texttt{origin} is
+      \textbf{consulted}, a new \texttt{visit} \textbf{object is
+      created, recording}:
+
+      \begin{itemize}
+      \tightlist
+      \item
+        \textbf{when the visit happened} (\emph{according to Software
+        Heritage clock})
+      \item
+        the \textbf{full} \texttt{snapshot} of the \textbf{state} of the
+        \texttt{software\ origin}
+      \end{itemize}
+    \end{enumerate}
+  \end{itemize}
+\end{enumerate}
+
+\hypertarget{data-structure}{%
+\subsection{Data structure}\label{data-structure}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{fact}: \textbf{source code is duplicated}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{code hosting diaspora}
+  \item
+    \textbf{vendoring}: \emph{copy/paste of entire external FOSS
+    components into other software products}
+  \item
+    usually a \textbf{very small number of files/directories are
+    modified by a single commit} -\textgreater{} \emph{large overlap
+    between revisions of the same project}
+  \item
+    \textbf{emergence of DVCS} (\emph{Distributed VCS}):
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      \textbf{definition}: \emph{natively work by replicating entire
+      repository copies around}
+    \item
+      \textbf{example}: \emph{GitHub pull requests: creation of an
+      additional repository copy at each change done by a new developer}
+    \end{enumerate}
+  \item
+    \textbf{migration from one VCS to another}: \emph{e.g.~Subversion
+    (SVN) -\textgreater{} Git resulting in additional copies, but in
+    different distribution formats, of the very same development
+    histories}
+  \end{itemize}
+\item
+  \textbf{data structure}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{principle}:
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      \textbf{deduplication} should be used for \textbf{long term
+      preservation and storage efficiency}
+    \item
+      \textbf{software artifacts} that need to be \textbf{deduplicated}:
+      \texttt{file\ contents}, \texttt{directories}, \texttt{revisions},
+      \texttt{releases}, \texttt{snapshots}
+    \end{enumerate}
+  \item
+    \textbf{model}: the \textbf{Software Heritage archive} is a
+    \textbf{Merkel DAG} (\emph{Direct Acyclic Graph}) (\emph{cf.~Figure
+    2 in article})
+  \item
+    \textbf{nodes}:
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      each \textbf{artifact} in the \textbf{archive hierarchy},
+      \emph{from blobs to entire snapshots}, is a \textbf{node}
+    \item
+      each \textbf{node} contains all \textbf{metadata} that are
+      \textbf{specific to the node itself} (\emph{e.g.~commit messages,
+      timestamps, file names})
+    \item
+      each \textbf{node} is \textbf{identified by an intrinsic
+      identifier}:
+
+      \begin{itemize}
+      \tightlist
+      \item
+        \textbf{computed from the node itself} (\emph{i.e.~a
+        cryptographic hash of the node content})
+      \item
+        \textbf{node content}: \emph{node-specific metadata and the
+        identifiers of child nodes represented in a canonical form}
+      \end{itemize}
+    \end{enumerate}
+  \item
+    \textbf{edges between nodes}:
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      \texttt{directory} entries \textbf{point} to \textbf{other}
+      \texttt{directories} or \texttt{file\ contents}
+    \item
+      \texttt{revisions} \textbf{point} to \texttt{directories} and
+      \textbf{previous} \texttt{revisions}
+    \item
+      \texttt{releases} \textbf{point} to \texttt{revisions}
+    \item
+      \texttt{snapshots} \textbf{point} to \texttt{revisions} and
+      \texttt{releases}
+    \end{enumerate}
+  \item
+    \textbf{example of a revision node in the Software Heritage Merkel
+    DAG} (\emph{cf.~Figure 3 in article})
+  \item
+    \textbf{properties inherited from the Merkel data structure}:
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      \textbf{built-in deduplication}:
+
+      \begin{itemize}
+      \tightlist
+      \item
+        \textbf{hash property}: \emph{any software artifact encountered
+        gets added to the archive, only if a corresponding node with a
+        matching intrinsic identifier is not already available in the
+        graph}
+      \item
+        \textbf{consequence}: \texttt{file\ contents},
+        \texttt{directories}, project \texttt{snapshots} are
+        \textbf{deduplicated} -\textgreater{} \textbf{storage costs only
+        once}
+      \end{itemize}
+    \item
+      \textbf{side effect property}: the \textbf{entire development
+      history of all source code archived in Software Heritage} is
+      \textbf{available as a unified whole} -\textgreater{} \emph{code
+      reuse across different projects or software origins readily
+      available}
+    \end{enumerate}
+  \end{itemize}
+\end{enumerate}
+
+\hypertarget{architecture-and-data-flow}{%
+\section{Architecture and data flow}\label{architecture-and-data-flow}}
+
+\textbf{Requirement}: \emph{an architecture suitable for ingesting
+source code artifacts into the data model defined for Software Heritage}
+
+\hypertarget{data-flow-ingestion}{%
+\subsection{Data Flow Ingestion}\label{data-flow-ingestion}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{definition}: \textbf{periodically crawling} a set of
+  ``\textbf{leads}'' (\emph{i.e.~curated list of code hosting places})
+  for \textbf{content to archive and further leads} (\emph{like a search
+  engine})
+\item
+  \textbf{architecture}: \textbf{split into two conceptual phases}
+  (\emph{listing and loading}) -\textgreater{} \textbf{facilitate
+  extensibility and collaboration} (\emph{cf.~Figure 4 in article})
+\end{enumerate}
+
+\hypertarget{listing}{%
+\subsection{Listing}\label{listing}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{definition}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{input}: a \textbf{single code hosting platform}
+    (\emph{e.g.~GitHub, Bitbucket, PyPI, Debian})
+  \item
+    \textbf{role}: \textbf{enumerating all} \texttt{software\ origins}
+    (\emph{e.g.~individual Git/SVN repositories, individual package
+    names, etc.}) \textbf{found at listing time}
+  \end{itemize}
+\item
+  \textbf{implementation}: \textbf{dedicated lister software components
+  for each different type of platform} (\emph{e.g.~dedicated listers for
+  GitHub, Bitbucket, etc.})
+\item
+  \textbf{listing disciplines}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{full listing}:
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      \textbf{collecting the entire list of origins available at a given
+      code hosting platform at once}
+    \item
+      \textbf{pro}: \emph{making sure that no origin is being
+      overlooked}
+    \item
+      \textbf{con}: \textbf{costly if done too frequently on large
+      platforms} (\emph{e.g.~as of 2017, GitHub has more than 55 million
+      Git repositories})
+    \end{enumerate}
+  \item
+    \textbf{incremental listing}:
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      \textbf{collecting only the new origins since the last listing}
+    \item
+      \textbf{pro}: \emph{quickly update the list of origins available
+      at a code hosting platform}
+    \item
+      \textbf{remark}: \emph{to be used after a full listing has been
+      executed}
+    \end{enumerate}
+  \end{itemize}
+\item
+  \textbf{listing styles}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{pull style}: \textbf{the archive periodically checks the
+    code hosting platforms to list origins}
+  \item
+    \textbf{push style}:
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      \textbf{code hosting platforms}, \emph{properly configured to work
+      with Software Heritage}, \textbf{contact back the archive at each
+      change in the list of} \texttt{origins}
+    \item
+      \textbf{pro}: \textbf{minimize the lag between the appearance} of
+      a \textbf{new} \texttt{software\ origin} and its
+      \textbf{ingestion} in \textbf{Software Heritage} -\textgreater{}
+      \emph{optimization on top of the pull style}
+    \item
+      \textbf{con}: risk of \textbf{losing notifications}
+      -\textgreater{} \texttt{software\ origins} \emph{not being
+      considered for archival}
+    \end{enumerate}
+  \end{itemize}
+\end{enumerate}
+
+\hypertarget{loading}{%
+\subsection{Loading}\label{loading}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{definition}: \textbf{actual ingestion in the archive of source
+  code} found at known \texttt{software\ origins}: \textbf{extraction of
+  software artifacts} in \texttt{software\ origins} and \textbf{adding
+  them to the archive}
+\item
+  \textbf{implementation}: \textbf{specific to the technology used to
+  distribute source code}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{one loader} for each \textbf{type} of \textbf{VCS}
+    (\emph{e.g.~Git, SVN, Mercurial, etc.})
+  \item
+    \textbf{one loader} for each \textbf{source package format}
+    (\emph{e.g.~Debian source packages, source RPMs, tarballs, etc.})
+  \end{itemize}
+\item
+  \textbf{native deduplication w.r.t. the entire archive}: \textbf{any
+  artifact} (\texttt{blob}, \texttt{revision}, \emph{etc.}) encountered
+  at any \texttt{origin} will be \textbf{added to the archive}
+  \emph{only if} a \textbf{corresponding node cannot be found in the
+  archive as a whole}
+\item
+  \textbf{deduplication use case}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{first encounter ever}: the \textbf{Git loader} will load all
+    its \textbf{software artifacts} (\texttt{file\ contents},
+    \texttt{revisions}, \emph{etc.}) into the \textbf{Software Heritage
+    archive}
+  \item
+    \textbf{next encounter of an identical repository}: \emph{nothing
+    will be added at all to the archive}
+  \item
+    \textbf{next encounter with a slightly different repository}
+    (\emph{e.g.~a repository containing a dozen additional commits not
+    yet integrated in the official release of Linux}): \emph{only the
+    corresponding \texttt{revision\ nodes}, new \texttt{file\ contents}
+    and \texttt{directories} pointed by them will be loaded into the
+    archive}
+  \end{itemize}
+\end{enumerate}
+
+\hypertarget{scheduling}{%
+\subsection{Scheduling}\label{scheduling}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{definition}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{listing and loading happen periodically on a schedule}
+  \item
+    \textbf{keeping track of when the next listing/loading actions need
+    to happen}:
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      for each \textbf{code hosting platform} (\emph{for listers})
+    \item
+      for each \texttt{software\ origin} \emph{(for loaders})
+    \end{enumerate}
+  \item
+    \textbf{remark}:
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      even when \textbf{push-style listing} is performed, we still want
+      to \textbf{periodically list pull-style} to stay on the safe side
+    \item
+      \emph{scheduling is not always needed for listing}
+    \end{enumerate}
+  \end{itemize}
+\item
+  \textbf{update lag vs.~resource consumption}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{problem}:
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      number of \textbf{hosting platforms to list} is \textbf{not
+      enormous}, but the amount of \texttt{software\ origins} to
+      \textbf{load into the archive} can easily reach \textbf{hundreds
+      of millions given the size of major code hosting platforms}
+    \item
+      \textbf{listing/loading too frequently} from that many
+      \textbf{code hosting platforms} -\textgreater{} \emph{unwise
+      resource consumption and unwelcome to maintainers of those
+      platforms}
+    \end{enumerate}
+  \item
+    \textbf{solution}: \textbf{adaptive scheduling discipline}
+    -\textgreater{} \emph{balance between update lag and resource
+    consumption}
+  \end{itemize}
+\item
+  \textbf{adaptive scheduling}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{fruitful actions}:
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      each run of a \textbf{periodic action} (\emph{listing/loading})
+      can be \textbf{fruitful}, if it resulted in \textbf{new
+      information since the last visit}
+    \item
+      \textbf{fruitful listing}: \emph{the discovery of new
+      \texttt{software\ origins}}
+    \item
+      \textbf{fruitful loading}: \emph{the overall state of the
+      consulted \texttt{origins} differs from the last observed one}
+    \end{enumerate}
+  \item
+    \textbf{process}:
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      if a \textbf{scheduled action} has been \textbf{fruitful}
+      -\textgreater{} the consulted site has seen \textbf{activity since
+      the last visit} -\textgreater{} \emph{increase the frequency of
+      future visits}
+    \item
+      else (\emph{no activity}) -\textgreater{} \emph{decrease the
+      frequency of future visits}
+    \item
+      \textbf{exponential backoff strategy}: if \textbf{activity} is
+      noticed -\textgreater{} \emph{visit frequency is doubled, else it
+      is halved}
+    \end{enumerate}
+  \end{itemize}
+\end{enumerate}
+
+\hypertarget{archive}{%
+\subsection{Archive}\label{archive}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{logical representation}: \textbf{Merkel DAG data structure}
+\item
+  \textbf{physical storage}: \textbf{different technologies} due to the
+  differences in \textbf{size requirements} for storing
+  \textbf{different parts of the graph}
+\item
+  \texttt{blob} \textbf{nodes storage}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{storage space}: occupy the \textbf{most space} as they
+    contain the \textbf{full content of all archived source code files}
+  \item
+    \textbf{storage technology}:
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      \textbf{key-value object storage} (\emph{key = intrinsic
+      identifier of the Merkel DAG node})
+    \item
+      \textbf{pros}:
+
+      \begin{itemize}
+      \tightlist
+      \item
+        \textbf{horizontal scaling}: \textbf{distribution} of the
+        \textbf{object storage over multiple machines} -\textgreater{}
+        \emph{performance and redundancy}
+      \item
+        \textbf{key-value paradigm is very popular among current storage
+        technologies} -\textgreater{} \emph{easily host copies of the
+        bulk of the archive on premise/public cloud offerings}
+      \end{itemize}
+    \end{enumerate}
+  \end{itemize}
+\item
+  \textbf{rest of the DAG storage}: \textbf{RDBMS} (\texttt{Postgres}):
+
+  \begin{itemize}
+  \tightlist
+  \item
+    roughly \textbf{one table per node type}
+  \item
+    \textbf{key}: \textbf{intrinsic identifier of Merkel DAG node}
+  \item
+    \textbf{pros}:
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      \textbf{horizontal scaling across multiple servers}
+    \item
+      \textbf{master/slave replication and point-in-time recovery}
+      -\textgreater{} \emph{performance and recovery}
+    \end{enumerate}
+  \end{itemize}
+\item
+  \textbf{hash object storage}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{problem}: \textbf{hash collisions} if two \textbf{different
+    objects hash to the same intrinsic identifier} -\textgreater{}
+    \emph{risk of storing only one of the nodes}
+  \item
+    \textbf{solution}: \textbf{multiple cryptographic checksums with
+    unicity constraints} on each of them to \emph{detect collisions
+    before adding new software artifact to the archive}
+  \item
+    \textbf{types of checksums}:
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      \textbf{used}: \texttt{SHA1}, \texttt{SHA256},
+      \texttt{"salted"\ SHA1} \textbf{checksums} (\emph{in the style of
+      what Git does})
+    \item
+      \textbf{in the process of adding}: \texttt{BLAKE2}
+      \textbf{checksums}
+    \end{enumerate}
+  \end{itemize}
+\item
+  \textbf{node mirroring}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{change feed}:
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      each \textbf{type} of \textbf{node} is associated to a
+      \textbf{change feed} that \textbf{takes note of all changes
+      performed to the set of objects in the archive}
+    \item
+      \textbf{persistent}
+    \item
+      the \textbf{archive} is \textbf{append-only} -\textgreater{} under
+      normal circumstances, each \textbf{feed} will \textbf{only list
+      additions of new objects as soon as they are ingested into the
+      archive}
+    \end{enumerate}
+  \item
+    \textbf{pro of using change feeds}: ideal for \textbf{mirror
+    operators} -\textgreater{} \emph{after a full mirror step, can
+    cheaply remain up to date w.r.t. the main archive}
+  \end{itemize}
+\item
+  \textbf{retention policy}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{retention policy example}: \emph{each file content must
+    exist in at least 3 copies}
+  \item
+    \textbf{process}: a \textbf{software component of the archive}:
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      \textbf{keeps track of the number of copies} of a given
+      \texttt{file\ content} and \textbf{where each of them is}
+    \item
+      \textbf{periodically swipe all known objects for adherence to the
+      policy}
+    \item
+      when \textbf{fewer copies than desired exists}, \textbf{additional
+      copies as needed to satisfy the retention policy are
+      asynchronously made by the archiver}
+    \end{enumerate}
+  \end{itemize}
+\item
+  \textbf{object corruption automatic healing}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{example of an object corruption scenario}: \emph{storage
+    media decay}
+  \item
+    \textbf{process}: \textbf{a software component of the archive}:
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      \textbf{periodically checks each copy of all known objects}:
+      \emph{random selection at a suitable frequency}
+    \item
+      \textbf{recomputes the intrinsic identifier of each copy and
+      compares it with the known one to verify its integrity}
+    \item
+      in case of a \textbf{mismatch}:
+
+      \begin{itemize}
+      \tightlist
+      \item
+        \textbf{all known copies of the object are checked on-the-fly
+        again}
+      \item
+        assuming \textbf{one pristine copy} is found, it will be used to
+        \textbf{overwrite corrupted copies} -\textgreater{}
+        \emph{automatic healing}
+      \end{itemize}
+    \end{enumerate}
+  \end{itemize}
+\end{enumerate}
+
+\hypertarget{current-status-road-map}{%
+\section{Current status \& road-map}\label{current-status-road-map}}
+
+\hypertarget{listers}{%
+\subsection{Listers}\label{listers}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{implemented listers}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{GitHub and Bitbucket listers}: \textbf{full and incremental
+    listing} (\emph{put in production})
+  \item
+    \textbf{consequence}: \textbf{refactoring of common code}
+    -\textgreater{} \textbf{lister helper component} to \emph{easily
+    implement listers for other code hosting platforms}
+  \end{itemize}
+\item
+  \textbf{upcoming listers}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \emph{FusionForge, Debian and Debian-based distributions}
+  \item
+    \emph{bare bone FTP sites distributing tarballs}
+  \end{itemize}
+\end{enumerate}
+
+\hypertarget{loaders}{%
+\subsection{Loaders}\label{loaders}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{implemented loaders}: \emph{Git, SVN, tarballs and Debian
+  source packages}
+\item
+  \textbf{upcoming loader}: \emph{Mercurial}
+\end{enumerate}
+
+\hypertarget{archive-coverage}{%
+\subsection{Archive coverage}\label{archive-coverage}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{GitHub archiving}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{full archiving once}
+  \item
+    \textbf{routinely maintain GitHub up-to-date}: \emph{more than 50
+    million Git repositories}
+  \end{itemize}
+\item
+  \textbf{Debian archiving}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{full archiving once}
+  \item
+    \textbf{all releases of Debian packages} (\emph{2005-2015})
+  \end{itemize}
+\item
+  \textbf{other archives}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{as of August 2015}: all current and historical releases of
+    \textbf{GNU projects}
+  \item
+    \textbf{full copies of all repositories} previously available on
+    \textbf{Glitorious and Google Code}: \emph{ongoing ingestion into
+    Software Heritage}
+  \end{itemize}
+\end{enumerate}
+
+\hypertarget{features}{%
+\subsection{Features}\label{features}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{available features}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{content lookup}:
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      check whether \textbf{specific} \texttt{file\ contents} have been
+      \textbf{archived by Software Heritage}
+    \item
+      \textbf{uploading} \texttt{file\ contents} or \textbf{directly
+      entering} their \textbf{checksum} from \textbf{Software Heritage
+      homepage}
+    \end{enumerate}
+  \item
+    \textbf{browsing via API}: \textbf{Web-based API}, allowing
+    \textbf{developers} to \textbf{navigate} through the \textbf{entire
+    Software Archive archive as a graph} :
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      \textbf{look up individual nodes} (\texttt{revisions},
+      \texttt{releases}, \texttt{directories}, \emph{etc.})
+    \item
+      \textbf{access their metadata}
+    \item
+      \textbf{follow links to other nodes}
+    \item
+      \textbf{download individual file contents}
+    \item
+      \textbf{visit information}: \textbf{reporting} when a given
+      \texttt{software\ origin} has been \textbf{visited} and its
+      \textbf{status at the time}
+    \item
+      \emph{documentation and concrete examples for practical use
+      online}
+    \end{enumerate}
+  \end{itemize}
+\item
+  \textbf{road-map features to be integrated incrementally}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{web browsing}: equivalent to \textbf{API browsing} but for
+    \textbf{non-developer Web} users; \emph{i.e.~GUI}:
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      state-of-the-art \textbf{interfaces} for \textbf{browsing the
+      contents of individual VCS}
+    \item
+      \emph{tailored to navigate a much larger archive}
+    \end{enumerate}
+  \item
+    \textbf{provenance information}: \textbf{reverse lookup}: \emph{all
+    the places and timestamps where a given source code artifact has
+    been found}
+  \item
+    \textbf{metadata search}: \textbf{searches} based on
+    \textbf{project-level metadata}:
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      \textbf{simple information}: \emph{project name, hosting place,
+      etc.}
+    \item
+      \textbf{substantial information}: \emph{entity behind the project,
+      license, etc.}
+    \end{enumerate}
+  \item
+    \textbf{content search}: \textbf{searches} based on the
+    \textbf{content} of \textbf{archived files}:
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \tightlist
+    \item
+      \textbf{full-text search}
+    \item
+      \textbf{raw character sequences}
+    \item
+      \textbf{syntax trees for a given programming language}
+    \end{enumerate}
+  \end{itemize}
+\end{enumerate}
+
+
+    % Add a bibliography block to the postdoc
+
+
+
+    \end{document}
