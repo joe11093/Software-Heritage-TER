@@ -1,0 +1,45 @@
+GitHub
+lister (SWHIndexingHttpLister)
+path template = '/repositories?since=%d'
+model = GitHubModel
+lister name = github
+github repo model
+  uid -> repo[id]
+  indexable -> repo[id]
+  name -> repo[name]
+  full_name -> repo[full_name]
+  html_url -> repo[html_url]
+  origin_url -> repo[html_url]
+  origin_type -> git
+  description -> repo[description]
+  fork -> repo[fork]
+
+BitBucket
+lister (SWHIndexingHttpLister)
+path template = '/repositories?after=%s'
+model = BitBucketModel
+lister name = bitbucket
+bitbucket repo model
+  uid -> repo[uuid]
+  indexable -> repo[created_on]
+  name -> repo[name]
+  full_name -> repo[full_name]
+  html_url -> repo[links][html][href]
+  origin_url -> repo[links][clone][0][href]
+  origin_type -> repo[scm]
+  description -> repo[description]
+
+GitLab
+lister(PageByPageHttpLister)
+path template = '/projects?page=%d&order_by=id'
+model = GitLabModel
+lister name  = gitlab
+gitlab repo model
+  instance -> self.instance
+  uid -> self.uid(repo)
+  name -> repo[name]
+  full_name -> repo[path_with_namespace]
+  html_url -> repo[web_url]
+  origin_url -> repo[http_url_to_repo]
+  origin_type -> git
+  description -> repo[description]

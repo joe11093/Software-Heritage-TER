@@ -1,0 +1,17 @@
+cachedir : the directory used to store the documents retrieved from launchpad
+anonymous login : read-only access to launchpad's public data
+
+Launchpad.login_anonymously(WS_client_string_id, launchpad_instance_string, cachedir, version="version_name") :
+  role: read-only access to launchpad's public data
+  options:
+    WS_client_string_id: a string identifying the WS client
+    launchpad_instance_string: which instance of Launchpad to run against (e.g. production, staging, etc.)
+    cachedir: the cache directory to store retrieved documents from Launchpad
+    version: the API version to use (e.g. devel)
+
+<launchpad_object>.lp_attributes: data fields of the object
+<launchpad_object>.lp_collections: launchpad objects associated with this object
+<launchpad_object>.lp_entries: other launchpad objects associated with this object
+<launchpad_object>.lp_operations: methods that can be called on this object
+
+self_link: JSON representation of a launchpad object
