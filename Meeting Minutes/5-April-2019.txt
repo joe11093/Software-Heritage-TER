@@ -1,0 +1,54 @@
+
+
+
+We should do a table that shows every platform we checked out, and why it did/didn't work. 
+We should talk about how we thought we will write lots of code, but we ended up spending most of our time researching.
+
+Since we are facing issues regarding the APIs (not existing/not being exhaustive/being badly documented), we are considering making a crawler (python or java), where we will crawl the sitemap for example, obtain URLs of each individual projects, go to each project, and then take the needed info from the project page (origin URL, id, etc...).
+
+[Write what we thought of doing for the crawler, sourceforge, and custom API + how we think they will interact with SWH]
+
+We think the Crawler will take too much time and might be out of the scope of this project.
+
+We will continue to search for an API that will allow us to do what we want.
+
+We found the chat of the SWH devs. We will use it to try and get some info. We will ask them if they're planning to do a bazaar loader, and about the difficulty of creating a loader.
+Also ask them:
+	if i have the info that i need (via the sourceforge sitemap and the links it points to), can i make a lister that will take this information without using a custom API and have it be able to function? In other words, can i put code in the lister that gets all the needed data from SourceForge's sitemap and puts it into some python data structure, and then perform the mapping using this data structure without having the lister connect to a distant API (that of SF)?
+	This data structure must contain all the fields that are required to perform the mapping (id, indexing, URL etc...)
+
+In the meantime, we found that Launchpad has a client program that allows us to query their sites. We installed it and we are testing it. We will send an email to the Launchpad team to try to see if we can figure out how to get a list of all Git repos. 
+[Put code samples with their result]
+
+[Put the xml sitemap with examples of it, the urls, w the info we get from the project page and its subpages]
+
+
+Work for the coming period:
+===========================
+
+	5-april => 12-april midnight
+	============================
+
+		Bachar:
+		-------
+		Work on the launchpad client.
+		Check out the Loader (code/documentation)
+
+		Tasnim:
+		-------
+		Search for an appropriate API [write the name of each, and what she did or didn't find]
+
+
+		Joseph:
+		-------
+		Email Jessie to figure out the size of the rapport in pages. 
+		Email the devs (see above)
+		Figure out what info I can get from the sitemap.xml of Sourceforge (see if i can the fields)
+
+	12-April => 19-April
+	====================
+
+		Write Report sections, and presentation sections
+		Decide on which of the paths above we will follow (launchpad? loader? another api? sourceforge?)
+
+
