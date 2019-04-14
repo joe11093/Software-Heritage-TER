@@ -3,3 +3,6 @@ Documentation Software Heritage (version locale) : https://docs.softwareheritage
 Liste des Listers avec informations : https://forge.softwareheritage.org/source/swh-lister/
 Tutoriel Lister : https://www.softwareheritage.org/2017/03/24/list-the-content-of-your-favorite-forge-in-just-a-few-steps/
 Tutoriel vidéos Docker : https://www.youtube.com/watch?v=wi-MGFhrad0&list=PLhW3qG5bs-L99pQsZ74f-LC-tOEsBp2rK
+SourceForge Unicore API :
+  - https://sourceforge.net/p/unicore/wiki/REST_API/
+  - https://sourceforge.net/p/forge/documentation/Using%20the%20Release%20API/
