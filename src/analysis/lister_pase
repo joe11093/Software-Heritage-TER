@@ -1,0 +1,27 @@
+Details of the lister_base module
+===================================
+
+- utcnow(): utility [will not implement]
+- FetchError(RuntimeError): Exception class for listers [will not implement]
+
+Class: SWHListerBase:
+	attributes:
+			MODELS (abstract) [to implement]
+			LISTER_NAME	(abstract) [to implement]
+			response (concrete)
+
+	methods	
+		- [abstract] transport_request(id: string) -> response   [to implement]
+		- [abstract] transport_response_to_string(response) -> str [to implement]
+		- [abstract] transport_response_simplified(response) -> list of dict (repo info) [to implement]
+		- [abstract] transport_quota_check(response) -> (retry: bool, seconds: long) [to implement]
+		- filter_before_inject(model_list: list of dict) -> list of dict [maybe]
+		- do_additional_checks (modellist : list of doct) - > list of dict [maybe]
+		- is_within_bounds() -> bool [probably not]
+	properties
+		- ADDITIONAL_CONFIG (property)
+			-safely_issue_request(id) -> response [probably not]
+			-ingest_data(id, checks) -> response, list of repos to inject	[probably not]
+
+
+
