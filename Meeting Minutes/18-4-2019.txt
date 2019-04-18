@@ -1,0 +1,46 @@
+Meeting at LIRMM
+Joseph, Bachar, Tasnim avec Jessie
+
+On a parlé de ce qu'on a fait les 2 semaines precedentes.
+On a decidé de formaliser l'hiearchie des listers classes qui existent dans SWH (base lister, http etc) et de placer notre nouveau lister dans cette hierachie.
+
+On doit parler dans notre rapport finale des containtes, surtout par rapport à l'absence du Loader de Bazaar.
+
+Ca serait interessant de mettre dans le rapport les APIs qu'on a utilisé et expliquer trés rapidement si ca marche ou pas. Ne pas ajouter beaucoup de details. 
+
+On peut utilisé le resumé de Tasnim dans notre rapport et mettre l'article complet OU le resumé de Bachar en annexe. 
+
+We decided that the following step will be the following:
+	- Designer Lister
+	- Construct hiearchy
+	- Identify which methods to override
+	- Proposal of a Launchpad Lister
+	- Generalize the Launchpad Lister into a more generic lister
+	- Identify possible design problems if any
+
+------------------------------------------------------------------------
+
+- Email to Jessie
+- Implementation details: 	* Model
+							* Lister
+							* Tasks
+- Test:	* Model
+		* Lister
+		* Tasks
+
+
+We modeled the hiarchy of the lister classes and placed the listers on it.
+
+We modled the Database model of some listers to understand better how to construct our own. This modelling takes into consideration which classes where inherited, the metaclass, and the columns and their properties. 
+
+======================================================
+We noticed that Github's lister contains a DB column that indicates whether it's a fork or not but there is not column that indicates what project it forked. Could this be added as a simple foreign key to another pre-existing project? We could (maybe) get the ID from a function in the Github API that shows which project it forks (does such a function exist ?)
+=======================================================
+
+=======================================================
+We also noticed that the naming conventions of the database table names don't follow
+any naming convention (some have 'repo' and others 'repos', and npm's table name is 'npm_visit')
+=======================================================
+
+
+
