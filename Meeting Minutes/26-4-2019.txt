@@ -1,0 +1,30 @@
+26-4-2019
+
+Meeting in the BU
+
+Bachar, Joseph, Tasnim
+
+We started our day by running code. 
+The python code connects to the Launchpad servers via its client, gets all projects and puts them in a file. 
+Then we are able to get all git projects by looping over and filtering this list.
+We were able to access the attributes of the projects.
+
+Since we don't really have an API to query other than by using the Launchpad client, we decided to dump the projects we get into a JSON.
+We will create a proxy class.
+This proxy class will contain the Lauchpad client object. Its job will be to handle all operations around the client object. 
+It will be able to fetch projects, filter the git ones, get their repos.
+It will also contain functions that are meant to import and export the json.
+It will build an index that contains the GIT repos of launchpad, which will be indexed by their IDs.
+This index is what will be accessible to the lister and its what the Lister will query instead of querying an API.
+
+We looked into the resulting JSON and were able to map the repo model to the model required by SWH. 
+We also created the model of the Proxy class.
+
+Once the lister and the proxy class are created, we will be able to use them together. 
+
+Tasnim: Will learn about how to test the code we will write.
+Bachar: Will write the proxy class
+Joseph: Will write the lister.
+
+We also installed some things we needed (SWH repo to obtain all their code).
+
