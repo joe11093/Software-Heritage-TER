@@ -1,0 +1,40 @@
+- transport_request(id)
+	return index[id]
+	//return from the index the object denoted by the ID 
+-transport_response_tostring(response)
+	json.dumps(response, indent)
+	//transform the json into a string
+
+-transport_request_simplified(response)
+	json.dump(respoonse)
+	//dictionary
+- transport_quota_check(resp)
+	return(false, 0)
+	//we dont access the server so theres no need for this functiopn
+	//but it must be implemented 		
+
+
+PROXY FUNCTIONS
+================
+
+-Login: to connect to the API
+	this connection will be anonymous as we only need readonly access
+
+-Get git projects
+
+-Get git repos
+	//the repos are part of the project
+
+-Exporting to JSON
+-Filtering the JSON
+	//We noticed that some repos are replicated
+	//We have to filter that so we dont have duplicates
+	//We can fitler on the GitIdentity or UniqueName of the project because all 
+	//of them have the same ID.
+	//Use a dictionary?
+	//Filter on unique name? It's at least as unique as the ID if not more. 
+
+-Importing from JSON
+
+-Build Index
+	
