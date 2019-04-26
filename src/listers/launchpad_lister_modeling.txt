@@ -1,0 +1,10 @@
+Launchpad Lister :
+==================
+'get_model_from_repo()' mapping :
+uid = ? (Abstract) → git.git_identity (String)
+name = ? (String) → git_repo.name
+full_name = ? (String) → git_repo.unique_name
+origin_url = ? (String) → git_repo.git_https_url
+origin_type = project.vcs.lower() (String)
+description = ? (String) → git_repo.description
+last_seen = ? (DateTime) → date_last_modified

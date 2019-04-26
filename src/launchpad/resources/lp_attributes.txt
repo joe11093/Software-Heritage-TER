@@ -1,0 +1,185 @@
+project lp_attributes
+=====================
+active
+branch_sharing_policy
+bug_reported_acknowledgement
+bug_reporting_guidelines
+bug_sharing_policy
+commercial_subscription_is_due
+date_created
+description
+display_name
+download_url
+freshmeat_project
+homepage_url
+http_etag
+information_type
+is_permitted
+license_approved
+license_info
+licenses
+name
+official_bug_tags
+private
+programming_language
+project_reviewed
+qualifies_for_free_hosting
+remote_product
+resource_type_link
+reviewer_whiteboard
+screenshots_url
+self_link
+sourceforge_project
+specification_sharing_policy
+summary
+title
+translationpermission
+translations_usage
+vcs
+web_link
+wiki_url
+
+AFTER FILTERING
+===============
+project :
+date_created
+description
+display_name
+download_url
+homepage_url
+name
+self_link
+title
+vcs
+
+git_repository lp_attributes
+============================
+branches_collection_link
+code_import_link
+date_created
+date_last_modified
+default_branch
+dependent_landings_collection_link
+description
+display_name
+git_https_url
+git_identity
+git_ssh_url
+http_etag
+information_type
+landing_candidates_collection_link
+landing_targets_collection_link
+name
+owner_default
+owner_link
+private
+recipes_collection_link
+refs_collection_link
+registrant_link
+repository_type
+resource_type_link
+reviewer_link
+self_link
+subscribers_collection_link
+subscriptions_collection_link
+target_default
+target_link
+unique_name
+web_link
+webhooks_collection_link
+
+AFTER FILTERING
+===============
+code_import_link
+date_last_modified
+description
+display_name
+git_https_url
+git_identity
+information_type
+name
+repository_type
+self_link
+target_default
+target_link
+unique_name
+
+
+EXAMPLES
+========
+Bazaar + long description
+--------------------------
+Date created: 2009-01-13 07:47:53.889524+00:00
+    Description: Visual Workspace consists of a set of core components that are based on an award winning component framework for the Qt library, providing the visual extensible environment. The visual environment uses components in the form of toolboxes to provide the scientific functionality and provides a command line scriptable interface using Python as its core.
+
+To get involved with development, please contact the project owner.
+    Display Name: Visual Workspace
+    Download URL: None
+    Homepage URL: None
+    Name: vwspace
+    self_link: https://api.launchpad.net/devel/vwspace
+    Title: Visual Workspace
+    VCS: Bazaar
+
+Bazaar + short description
+--------------------------
+Date created: 2005-01-21 20:21:15.002053+00:00
+    Description: This library is generally used by applications that need to provide for privilege scalation in a GUI environment.
+    Display Name: LibGKSuUI
+    Download URL: None
+    Homepage URL: None
+    Name: libgksuui
+    self_link: https://api.launchpad.net/devel/libgksuui
+    Title: LibGKSuUI
+    VCS: Bazaar
+
+Bazaar + no description
+-----------------------
+Date created: 2009-01-13 10:26:17.105875+00:00
+    Description: None
+    Display Name: Nouveau Xorg driver
+    Download URL: None
+    Homepage URL: http://nouveau.freedesktop.org/wiki/
+    Name: nouveau
+    self_link: https://api.launchpad.net/devel/nouveau
+    Title: Nouveau Xorg driver
+    VCS: Bazaar
+
+
+Git + long description
+----------------------
+Date created: 2011-02-10 20:07:12.180966+00:00
+    Description: Redis is an open-source, networked, in-memory, persistent, journaled, key-value data store. It is written in ANSI C. Supported languages or language bindings include C, C++, C#, Clojure, Common Lisp, Erlang, Haskell, Java, JavaScript, Lua, Objective-C, Perl, PHP, Python, Ruby, Scala, Go, and Tcl.
+    Display Name: Redis
+    Download URL: None
+    Homepage URL: http://code.google.com/p/redis/
+    Name: redis
+    self_link: https://api.launchpad.net/devel/redis
+    Title: Redis
+    VCS: Git
+
+Git + short description
+-----------------------
+Date created: 2011-03-09 20:28:12.524645+00:00
+    Description: An extension to GTK+ that provides several useful widgets and classes to ease application development.
+
+Designed for elementary OS.
+    Display Name: Granite
+    Download URL: None
+    Homepage URL: https://elementary.io/
+    Name: granite
+    self_link: https://api.launchpad.net/devel/granite
+    Title: Granite
+    VCS: Git
+
+Git + no description
+-----------------------
+Date created: 2008-04-04 18:31:12.840139+00:00
+    Description: None
+    Display Name: Mumble
+    Download URL: None
+    Homepage URL: https://www.mumble.info/
+    Name: mumble
+    self_link: https://api.launchpad.net/devel/mumble
+    Title: Mumble
+    VCS: Git

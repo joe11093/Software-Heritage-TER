@@ -1,0 +1,39 @@
+14-4-2019
+
+Joseph - Bachar
+
+
+
+Ask jessie about where to put the tutorials
+Ask jessie if we need to add the apports
+
+We talked to the SWH developers using their chat channel. We asked them about SourceForge and about its XML Sitemap. They said that the Sitemap might be useful for SWH and that we might be able to query it as if we were querying an API.
+We also asked them about the Bazaar loader and if theres any plan to create one. They said that there are 2 candiadates of Google's summer of code that are planning to create a Bazaar loader.
+
+We created the skelleton of the Rapport and of the presentation. We sent the rapport skelleton to Jessie for feedback.
+
+Bachar will now work on the Launchpad client
+Joseph will now see what he can get from the SourceForge Sitemap.
+
+
+Sourceforge:
+	SitemapXML Only gives us links to the project pages (and a couple of subpages). We cannot filter them by VCS type. The pages have different tabs. Some of them contain a "code" tab that leads to the repo of the project. Others have a Git, SVN, etc tab.
+	I noticed however that the URL for Git repos follows the pattern:
+		 https://sourceforge.net/p/python-gsasl/code/ci/master/tree/
+	I am now trying to see if i can find a way to obtain all links that follow this pattern. 
+
+	I found that page structures are not similar across different projects in SourceForge. Even pages that contain code, they don't have the same tabs or the same way to access the repo or repos. Some of them have a "code" tab. Others have "Git" and "SVN" and "Mercurial" tab. And the "code" tab can have any of the other VCS systems. 
+	Furthermore, we cant find the needed fields for the mapping and the Sourceforge team was not helpful.
+
+Launchpad:
+	We had more success with Launchpad. We managed to write a script that used the Launchpad client.
+	The script queried the client and received all Launchpad projects. And then counted every Git project, every Bazaar project, and every "other".
+	The script is located in src/launchpad/vcs_project_distribution.py
+
+So we have decided to focus on Launchpad. Its api gave us a way to fetch all projects, and we are able to filter the projects by using the vcs attribute of each project object, therefore obtaining all git projects by filtering on vcs = "Git", or vcs = "Bazaar".
+This is a positive outcome as we were struggling to obtain such a list.
+
+Our challenges now are:
+	- We now need to figure out how to obtain the fields we needs.
+	- We need to know how to deal with the "transport" issue and the "quota" issue
+	- We need to figure out which Listers need to be extended to build our lister. Do we need a completely new type?
