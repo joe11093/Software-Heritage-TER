@@ -28,3 +28,4 @@ Joseph: Will write the lister.
 
 We also installed some things we needed (SWH repo to obtain all their code).
 
+Primary versions of lister and proxy class were created and some testing was prepared.
