@@ -27,3 +27,4 @@
 *.snm
 *.thm
 *.synctex.gz
+ENV/*
