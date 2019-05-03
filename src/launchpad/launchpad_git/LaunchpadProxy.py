@@ -31,6 +31,7 @@ are without VCS
 __launchpad = None
 GIT_REPO_ID = "unique_name"
 GIT_VCS = "Git"
+DEFAULT_CACHE_PATH = ".launchpadlib/cache/"
 DEFAULT_JSON_PATH = "index.json"
 DEFAULT_JSON_INDENT = 4
 
@@ -71,7 +72,7 @@ class LaunchpadProxy:
     or by updating the exported file's contents prior to the construction (greedy approach).
     """
 
-    def __init__(self, cache_dir):
+    def __init__(self, cache_dir=DEFAULT_CACHE_PATH):
         """
         create a launchpad proxy instance, using a cache directory path
         and initialize the index as an empty dictionary
