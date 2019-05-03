@@ -31,6 +31,7 @@ are without VCS
 __launchpad = None
 GIT_REPO_ID = "unique_name"
 GIT_VCS = "Git"
+DEFAULT_JSON_PATH = "index.json"
 DEFAULT_JSON_INDENT = 4
 
 class LaunchpadProxy:
@@ -137,7 +138,7 @@ class LaunchpadProxy:
 
         return git_entries
 
-    def export_git_entries(self, path, format="json"):
+    def export_git_entries(self, path=DEFAULT_JSON_PATH, format="json"):
         """
         export all unique git entries of publicly accessible git-based launchpad projects
         into a file having a specific format (by default, format = JSON) at a specific path
@@ -152,7 +153,7 @@ class LaunchpadProxy:
 
         return git_entries
 
-    def import_git_entries(self, path, format="json"):
+    def import_git_entries(self, path=DEFAULT_JSON_PATH, format="json"):
         """
         import all the previously exported unique git entries of publicly accessible
         git-based launchpad projects  from a file having a specific format (by default, format = JSON)
@@ -175,7 +176,7 @@ class LaunchpadProxy:
         for git_entry in git_entries:
             self.index[git_entry[GIT_REPO_ID]] = git_entry
 
-    def lazy_index_build(self, path, format="json"):
+    def lazy_index_build(self, path=DEFAULT_JSON_PATH, format="json"):
         """
         build an index of all unique git entries associated to publicly accessible git-based
         launchpad projects, previously exported into a file having a specific format
@@ -188,7 +189,7 @@ class LaunchpadProxy:
         git_entries = self.import_git_entries(path, format=format)
         self.__build_index(git_entries)
 
-    def greedy_index_build(self, path, format="json"):
+    def greedy_index_build(self, path=DEFAULT_JSON_PATH, format="json"):
         """
         build an index of all unique git entries associated to publicly accessible git-based
         launchpad projects, but update the contents of the exported file from which
