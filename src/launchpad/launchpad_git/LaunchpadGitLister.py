@@ -17,23 +17,22 @@ class LaunchpadGitLister(SWHListerBase):
 		#instance of the proxy class
 		self.api_proxy = new LaunchpadProxy()
 		#logging in anonymously to the launchpad API
-		api_proxy.login("SWH access", "production", "devel")
+		self.api_proxy.login("SWH access", "production", "devel")
 		#calling the proxy's indexing method
 		#will call the right index building based on whether the index file exists or not
 		if(os.path.isfile(DEFAULT_JSON_PATH)):
 			print("\nLazy index building at {}".format(datetime.now()))
 		    start_time = time()
-		    proxy.lazy_index_build()
+		    self.api_proxy.lazy_index_build()
 		    print("Built at {} (took {} seconds)".format(datetime.now(), time() - start_time))
-
 		else:
 			print("\nGreedy index building at {}".format(datetime.now()))
     		start_time = time()
-    		proxy.greedy_index_build()
+    		self.api_proxy.greedy_index_build()
     		print("Built at {} (took {} seconds)".format(datetime.now(), time() - start_time))
     	#REMOVE THIS PART
     	#printing the first n elements of the index
-    	api_proxy.index_head(n=2)
+    	self.api_proxy.index_head(n=2)
 
 
 	def transport_request(self, identifier):
