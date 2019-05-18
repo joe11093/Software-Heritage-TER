@@ -6,4 +6,4 @@ class LaunchpadGitModel(ModelBase):
   """a Launchpad git repository"""
   __tablename__ = "launchpad_git_repos"
 
-  uid = Column(Integer, primary_key=True)
+  uid = Column(String, primary_key=True)
