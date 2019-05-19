@@ -1,0 +1,65 @@
+BU
+
+Bachar Tasnim Joseph
+
+Deadlines:
+
+Rendu Conduite de Projet: 22 Mai à 23h55m 
+Rendu TER: mardi 27 mai à midi
+Soutenance: 4 Juin 10->11H AM
+
+If thursday 23 finishes and we dont have the code working, we will move to GitLab of LIRMM.
+
+
+Pour Conduite de Projet:
+==========================
+
+Joseph: A finir au maximum la nuit du 18
+		-Sujet
+		-Planning previsionel
+		-Planning final
+		-Données quantitaves
+
+Bachar: Aprés ma partie
+		-Données Qualitatives
+
+Tasnim: Premiere partie a faire aprés la partie de Bachar, 2eme partie aprés la partie de bachar
+		-Conclusion basée sur les 2 parties
+
+
+TER:
+======
+Deadline: le mardi 27 mai à midi
+Ajouter les resumés des articles en annexe. Garder uniquemet les concept qui n'ont pas deja été ajouter dans le rapport principale.
+
+
+Tasks for report:
+======
+
+Joseph:
+	Problematique
+	Implementation
+	Conclusion
+Tasnim: 
+	Introduction
+	Resultats
+Bachar:
+	Analyse
+	Conception
+	Annexes
+
+
+Meeting on 20-5:
+=================
+This meeting will be the start of the final phase of the TER.
+
+Priority1:
+----------
+We will debug our code, integrate it with the SWH platform and test to see if it works or not. And then try to fix what doesn't work.
+If all goes well, we will do a pull request to try to integrate it with the official platform. 
+If things do not go well, even after debugging, we will try to do another lister for the LIRMM gitlab.
+
+
+Priority 2:
+-----------
+Starting the rapport.
