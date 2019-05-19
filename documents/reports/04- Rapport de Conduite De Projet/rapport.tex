@@ -1,0 +1,119 @@
+\documentclass[12pt,a4paper]{report}
+
+%----------------------------------------------------------------------------------------
+%   PACKAGES
+%----------------------------------------------------------------------------------------
+\usepackage[francais]{babel} %French language package
+\usepackage[utf8]{inputenc} %UTF8
+\usepackage[T1]{fontenc} %For the acute french accents
+\usepackage[pdftex]{graphicx} %To add figures in the document
+\usepackage{hyperref} % To make hyperlinks in the document
+\usepackage{amsthm} % To add mathematical symbols
+
+\begin{document}
+%----------------------------------------------------------------------------------------
+%   TITLE PAGE
+%----------------------------------------------------------------------------------------
+\begin{titlepage}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines
+\center
+
+%----------------------------------------------------------------------------------------
+%   LOGOS SECTION
+%----------------------------------------------------------------------------------------
+\includegraphics[scale=0.5]{images/umLogo.png} % Université de Montpellier Logo
+\hspace{\fill}
+\includegraphics[scale=0.25]{images/fdsLogo.jpg} % Faculté de Sciences Logo
+
+%----------------------------------------------------------------------------------------
+%   HEADING SECTIONS
+%----------------------------------------------------------------------------------------
+\textsc{\LARGE M1 Informatique AIGLE}\\[1cm]
+\textsc{\Large \textbf{HMIN201}}\\[0.25cm]
+\textsc{\large M1 TER}\\[0.5cm]
+
+%----------------------------------------------------------------------------------------
+%   TITLE SECTION
+%----------------------------------------------------------------------------------------
+\HRule \\[0.4cm]
+{ \huge \bfseries Conduite de Projet}\\[0.4cm]
+{ \Large \bfseries Rapport de TER}\\[0.4cm]
+\HRule \\[0.5cm]
+
+%----------------------------------------------------------------------------------------
+%   AUTHORS AND SUPERVISORS SECTION
+%----------------------------------------------------------------------------------------
+{ \huge \bfseries Groupe \textsc{Bajonim}}\\[0.4cm]
+\begin{minipage}{0.4\textwidth}
+\centering \small
+\textbf{Bachar \textsc{Rima}}, \\ \href{mailto:bachar.rima@etu.umontpellier.fr}{bachar.rima@etu.umontpellier.fr}\\ % Student
+\textbf{Joseph \textsc{Saba}}, \\ \href{mailto:joseph.saba@etu.umontpellier.fr}{joseph.saba@etu.umontpellier.fr}\\ % Student
+\textbf{Tasnim \textsc{Shaqura}}, \\ \href{mailto:tasnim.shaqura@etu.umontpellier.fr}{tasnim.shaqura@etu.umontpellier.fr}\\ % Student
+\end{minipage} \\[0.8cm]
+
+\begin{center}
+
+\emph{Responsable de l'UE:} \\
+Eric \textsc{Bourreau} % UE Supervisor
+\end{center}
+
+%----------------------------------------------------------------------------------------
+%   DATE SECTION
+%----------------------------------------------------------------------------------------
+{\large 22 Mai 2019}\\[1cm]
+\hspace{\fill}
+\vfill % Fill the rest of the page with whitespace
+\end{titlepage}
+
+\tableofcontents
+\chapter{Sujet}
+Le logiciel constitue une partie trés importante de nos connaisances scientifiques, culturelles, et technique. Les logiciels sont présents dans tous les aspects de notre vie quotidienne. Il est donc important d'archiver les logiciels.\newline
+Des efforts ont déja été fait pour la préservation des logiciels, tel que The Internet Archive et UNESCO Persist, mais ils se concentrent sur la préservation des éxécutables.
+Software Heritage est un projet qui a comme but la préservation des codes source des logiciels disponibles publiquement. Les codes source sont importants parcequ'ils peuvent être façilement compris par des humains, et peuvent être façilement transformés en éxécutables.\newline
+L'équipe de Software Heritage on crée une architecture qui permet de retrouver les sources codes d'un dépôt et de les placer dans l'archive. Les \textbf{Listers} sont une partie centrale à cette architecture. Ce sont des crawlers configurés pour parcourir des dépot de code et retrouver leurs contenu. Les differents dépôts de code ont des structures bien différentes l'un de l'autre, ce qui necessite la création d'un Lister dédié à chaque platforme qu'on souhaite archiver. L'équipe de Software Heritage a déja crée des Listers pour quelques dépots populaires, tel que Github et Bitbucket, avec succés; mais jusqu'à présent, aucune équipe externe a crée un Lister. \newline
+Les objectifs de ce TER sont:
+\begin{itemize}
+  \item Lire et comprendre les articles publiés par l'équipe de Software Heritage
+  \item Lire les tutoriels écrits par l'équipe de Software Heritage
+  \item Tester differents dépot de code
+  \item Écrire un Lister pour le dépot choisis
+  \item Répliquer localement l'environnement de Software Heritage et tester le Lister
+  \item Faire une Pull Request pour ajouter le Lister à Software Heritage
+\end{itemize}
+
+\chapter{Planning Prévisionnel}
+\begin{figure}[!ht]
+  	\hspace*{-2cm}   
+	\includegraphics[scale=0.72]{"images/gantt1"}
+	\caption{"Première partie du planning prévisionnel"}
+\end{figure}
+
+\begin{figure}[!ht]
+  	\hspace*{-2cm}   
+	\includegraphics[scale=0.78]{"images/gantt2"}
+	\caption{"Deuxième partie du planning prévisionnel"}
+\end{figure}
+
+
+\chapter{Planning Final}
+\begin{figure}[!ht]
+  	\hspace*{-2cm}   
+	\includegraphics[scale=0.72]{"images/final_gantt_1"}
+	\caption{"Première partie du planning final"}
+\end{figure}
+
+\begin{figure}[!ht]
+  	\hspace*{-2cm}   
+	\includegraphics[scale=0.75]{"images/final_gantt_2"}
+	\caption{"Deuxième partie du planning final"}
+\end{figure}
+
+\begin{figure}[!ht]
+  	\hspace*{-2cm}   
+	\includegraphics[scale=0.7]{"images/final_gantt_3"}
+	\caption{"Troisième partie du planning final"}
+\end{figure}
+\chapter{Données Quantitatives}	
+\chapter{Données Qualitatives}
+\chapter{Conclusion}
+\end{document}
