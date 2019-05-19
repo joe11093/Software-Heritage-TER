@@ -28,3 +28,4 @@
 *.thm
 *.synctex.gz
 ENV/*
+src/launchpad/resources/git_repos.json
