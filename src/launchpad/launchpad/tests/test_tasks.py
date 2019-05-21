@@ -13,52 +13,52 @@ def test_ping(swh_app, celery_session_worker):
     assert res.result == 'OK'
 
 
-@patch('swh.lister.launchpad.tasks.LaunchPadLister')
+@patch('swh.lister.launchpad.tasks.LaunchpadGitLister')
 def test_incremental(lister, swh_app, celery_session_worker):
-    # setup the mocked LaunchPadLister
+    # setup the mocked GitHubLister
     lister.return_value = lister
     lister.db_last_index.return_value = 42
     lister.run.return_value = None
 
     res = swh_app.send_task(
-        'swh.lister.launchpad.tasks.IncrementalLaunchPadLister')
+        'swh.lister.launchpad.tasks.IncrementalLaunchpadGitLister')
     assert res
     res.wait()
     assert res.successful()
 
- ##§§§   lister.assert_called_once_with(api_baseurl='https://api.')
+    lister.assert_called_once_with(api_baseurl='https://api.launchpad.net/devel')
     lister.db_last_index.assert_called_once_with()
     lister.run.assert_called_once_with(min_bound=42, max_bound=None)
 
 
-@patch('swh.lister.launchpad.tasks.LaunchPadLister')
+@patch('swh.lister.launchpad.tasks.LaunchpadGitLister')
 def test_range(lister, swh_app, celery_session_worker):
-    # setup the mocked BitbucketLister
+    # setup the mocked GitHubLister
     lister.return_value = lister
     lister.run.return_value = None
 
     res = swh_app.send_task(
-        'swh.lister.launchpad.tasks.RangeLaunchPadLister',
+        'swh.lister.launchpad.tasks.RangeLaunchpadGitLister',
         kwargs=dict(start=12, end=42))
     assert res
     res.wait()
     assert res.successful()
 
-##¡¡!!   lister.assert_called_once_with(api_baseurl='https://api.')
+    lister.assert_called_once_with(api_baseurl='https://api.launchpad.net/devel')
     lister.db_last_index.assert_not_called()
     lister.run.assert_called_once_with(min_bound=12, max_bound=42)
 
 
-@patch('swh.lister.launchpad.tasks.LaunchPadLister')
+@patch('swh.lister.launchpad.tasks.LaunchpadGitLister')
 def test_relister(lister, swh_app, celery_session_worker):
-    # setup the mocked LaunchPadLister
+    # setup the mocked GitHubLister
     lister.return_value = lister
     lister.run.return_value = None
     lister.db_partition_indices.return_value = [
         (i, i+9) for i in range(0, 50, 10)]
 
     res = swh_app.send_task(
-        'swh.lister.launchpad.tasks.FullLaunchPadLister')
+        'swh.lister.launchpad.tasks.FullLaunchpadGitRelister')
     assert res
 
     res.wait()
@@ -74,14 +74,14 @@ def test_relister(lister, swh_app, celery_session_worker):
             break
         sleep(1)
 
-## §§§   lister.assert_called_with(api_baseurl='https://api.')
+    lister.assert_called_with(api_baseurl='https://api.launchpad.net/devel')
 
-    # one by the FullLaunchPadLister task
-    # + 5 for the RangeLaunchPadLister subtasks
+    # one by the FullLaunchpadGitRelister task
+    # + 5 for the RangeLaunchpadGitLister subtasks
     assert lister.call_count == 6
 
     lister.db_last_index.assert_not_called()
-    lister.db_partition_indices.assert_called_once_with(10000)
+    lister.db_partition_indices.assert_called_once_with(1000)
 
     # lister.run should have been called once per partition interval
     for i in range(5):
