@@ -3,12 +3,16 @@
 %----------------------------------------------------------------------------------------
 %   PACKAGES
 %----------------------------------------------------------------------------------------
-\usepackage[francais]{babel} %French language package
-\usepackage[utf8]{inputenc} %UTF8
-\usepackage[T1]{fontenc} %For the acute french accents
-\usepackage[pdftex]{graphicx} %To add figures in the document
-\usepackage{hyperref} % To make hyperlinks in the document
-\usepackage{amsthm} % To add mathematical symbols
+\usepackage[francais]{babel} % French language package
+\usepackage[utf8]{inputenc} % UTF8
+\usepackage[T1]{fontenc} % acute french accents
+\usepackage[pdftex]{graphicx} % figures
+\usepackage[hidelinks]{hyperref} % hyperlinks
+\usepackage[dvipsnames]{xcolor} % colors
+\usepackage{amsthm} % mathematical symbols
+\usepackage{natbib} % To add the bibligraphy
+\usepackage[page,toc,titletoc,title]{appendix} %To add appendices to the document
+\usepackage[nottoc,notlot,notlof]{tocbibind} %To bind the table of contents to the bibligoraphy
 
 \begin{document}
 %----------------------------------------------------------------------------------------
@@ -78,63 +82,116 @@ Mattieu \textsc{Lafourcade} % UE Supervisor
 %----------------------------------------------------------------------------------------
 \tableofcontents
 \chapter{Introduction}
-	\section{Description de Software Heritage}
-	
-	\section{Contexte du TER}
-	\section{Plan du rapport}
+Les logiciels sont actuellement omniprésents dans tous les aspects de notre vie quotidienne; ils constituent l'un des piliers de l'héritage humain et doivent être préservés contre toute suppression et tout endommagement. Archiver leurs codes source s'avère ainsi une tâche primordiale. En effet, le code source d’un logiciel constitue un artefact logiciel essentiel dans le domaine des connaisances scientifiques, culturelles, et techniques. D’autre part, le code source est facilement lisible et compréhensible par les humains, et peut être transformé en fichiers exécutables. À ce titre là, des plateformes ont déjà été proposées telles que \href{https://archive.org/}{\texttt{The Internet Archive}} et \href{https://unescopersist.org/}{\texttt{UNESCO Persist}}. Toutefois, ces plateformes se concentraient plutôt sur la préservation des fichiers exécutables au lieu du code source \textsuperscript{\textcolor{MidnightBlue}{\citep{internetArchive}}}\textsuperscript{\textcolor{MidnightBlue}{\citep{unescoPersist}}}.
+
+\section{Description de Software Heritage}
+\texttt{Software Heritage} est une initiative lancée par \textbf{INRIA}\textcolor{RoyalBlue}{\footnote{\textbf{Institut National de Recherche en Informatique et Automatique}}}, soutenue par l'\textbf{UNESCO} et visant \og la collecte, la conservation et le partage de code source de tous les logiciels publiquement accessibles depuis n'importe quelle plateforme d'hébergement de code source \fg \textsuperscript{\textcolor{MidnightBlue}{\citep{dicosmo}}}.
+
+Son architecture consiste en un \textit{framework} permettant de retrouver le code source des logiciels susmentionnés et de les ingérer au sein de l’archive universel de \texttt{Software Heritage}. En particulier, les \textbf{Listers} en constituent une partie centrale: il s’agit de \textit{crawlers} configurés pour parcourir des dépôts de code source, \og \textit{mapper} \fg~ leurs modèles à des modèles intégrables à l'infrastructure, et reporter l'ingestion de leur contenu à d’autres composants du \textit{framework}. L'ingestion du contenu d'un dépôt \og \textit{listé} \fg au sein de l'archive est effectuée par des composants spécifiques, les \textbf{Loaders}. Enfin, la planification des tâches du \textit{listing} et du \textit{loading} est régulée par un \textbf{Scheduler}, un composant interagissant avec une queue de tâches asynchrones opérée par un serveur \texttt{Celery}.
+
+Il faut préciser que les plateformes d’hébergement embarquent chacune des dépôts de code source à structures différentes, ce qui nécessite la création d’un \textbf{Lister} dédié pour chaque plateforme. Par ailleurs, les différentes versions d'un logiciel et leurs métadonnées associées sont gérées par un gestionnaire de version, ce qui nécessite la création d'un \textbf{Loader} dédié pour chaque gestionnaire. Actuellement, tous les \textbf{Listers} et \textbf{Loaders} ont été créés uniquement par l’équipe de \texttt{Software Heritage}. Les \textbf{Listers} développés l'ont été pour les plateformes d’hébergement les plus populaires (\texttt{Github}, \texttt{Bitbucket}, $\dots$). De même, les \textbf{Loaders} développés l'ont été pour les gestionnaires de version les plus populaires (\texttt{Git}, \texttt{SVN}, \texttt{Mercurial}, $\dots$).
+
+\section{Contexte du TER}
+Dans le cadre de ce projet, encadré par Jessie Carbonnel, du module \textbf{HMIN201} désignant le TER, encadré par Mathieu LaFourcade, notre objectif final consiste à créer un \textbf{Lister} pour une plateforme de développement ciblée. Ainsi, les tâches nécessaires à effectuer afin d'accomplir ce but peuvent être énumérées de la manière suivante :
+\begin{itemize}
+	\item Lire et comprendre les articles et tutoriels écrits par l’équipe de \texttt{Software Heritage} ;
+	\item Analyser différentes plateformes d’hébergement afin d’en cibler une ;
+	\item Concevoir et développer un \textbf{Lister} pour la plateforme choisie ;
+	\item Répliquer localement l’environnement de \texttt{Software Heritage} afin de tester le \textbf{Lister} développé ;
+	\item Faire une \textit{Pull Request} afin d’intégrer le \textbf{Lister} testé au dépôt de développement de \texttt{Software Heritage} sur \texttt{GitHub}.
+\end{itemize}
+
+\section{Plan du rapport}
+Nous initions ce rapport par une introduction de notre projet consistant d'une une courte description de \texttt{Software Heritage}, suivie par la spécification du contexte du stage. Ensuite, nous détaillerons la problématique générale traitée par \texttt{Software Heritage} et la sous-problématique particulière adressée par notre projet.
+
+Après, nous commencerons la section d'analyse par une explication technique détaillée de l'infrastructure de \texttt{Software Heritage} et de son fonctionnement, l'étape fondamentale sur laquelle se base notre méthodologie. Nous terminerons cette section par le partage du planning prévisionnel du projet.
+
+Par la suite, nous rentrerons dans le vif du sujet en détaillant nos approches pour la conception et l'implémentation d'un \textbf{Lister}, suivie des résultats obtenus.
+
+Pour la conclusion, nous comparerons les versions prévisionnelle et finale du planning, puis nous discuterons les difficultés rencontrées et les perspectives du projet. Pour finir, nous listerons un bilan du projet en citant les apports techniques et personnels assimilées.
 
 \chapter{Problématique}
 \section{La diaspora du code source}
+
 \section{La fragilité du code source}
+
 \section{Software Heritage en tant que solution}
 	Current status et roadmap de SWH
+
 \section{Notre contribution}
 
 \chapter{Analyse}
 \section{Fonctionnement de Software Heritage}
-	\subsection{Modèle des données}
-		\subsubsection{Plateformes d'hébergement}
-		\subsubsection{Artéfacts logiciels}
-		\subsubsection{Informations sur la provenance des données}
-		\subsubsection{Structure des données}
-	\subsection{Architecture et flot des données}
-		\subsubsection{Flot d'ingestion des données}
-		\subsubsection{Listing}
-		\subsubsection{Loading}
-		\subsubsection{Scheduling}
-	\subsection{L'archive}
-		\subsubsection{Stockage des noeuds BLOB de l'archive}
-				les IDs, les fichiers
-		\subsubsection{Stockage des autres noeuds des archives}
-				chemins, repertoires, snapshot, revisions, releases\\				
-				postgres, etc
-		\subsubsection{Stockage haché des objets}
-		\subsubsection{Mise en mirroir des noeuds}
-		\subsubsection{Politique de rétention}
-		\subsubsection{Récupération automatique des objects corrompus}
-\section{Méthodologie}		
-	Sourceforge sitemap, api\\
-	Launchpad api, client\\
-	Analyzing the listers (bitbucket, gitlab, github, eclipse, LIRMM, OpenHub, 			Assembla, GNU savannah\\
-	heritage, injection de dependances\\
-	conclusion: on adoptera une strategie pour definir un lister, loader ou autre\\
+
+\subsection{Modèle des données}
+\subsubsection{Plateformes d'hébergement}
+
+\subsubsection{Artéfacts logiciels}
+
+\subsubsection{Informations sur la provenance des données}
+
+\subsubsection{Structure des données}
+
+\subsection{Architecture et flot des données}
+\subsubsection{Flot d'ingestion des données}
+
+\subsubsection{Listing}
+
+\subsubsection{Loading}
+
+\subsubsection{Scheduling}
+
+\subsection{L'archive}
+\subsubsection{Stockage des noeuds BLOB de l'archive}
+les IDs, les fichiers
+
+
+\subsubsection{Stockage des autres noeuds des archives}
+chemins, repertoires, snapshot, revisions, releases\\
+postgres, etc
+
+\subsubsection{Stockage haché des objets}
+
+\subsubsection{Mise en mirroir des noeuds}
+
+\subsubsection{Politique de rétention}
+
+\subsubsection{Récupération automatique des objects corrompus}
+
+\section{Méthodologie}
+Sourceforge sitemap, api\\
+Launchpad api, client\\
+Analyzing the listers (bitbucket, gitlab, github, eclipse, LIRMM, OpenHub, 			Assembla, GNU savannah\\
+heritage, injection de dependances\\
+conclusion: on adoptera une strategie pour definir un lister, loader ou autre\\
+
 \section{Planning Prévisionnel}
+
 \chapter{Conception}
-	design de la solution proposée (diagrammes + explications)
+design de la solution proposée (diagrammes + explications)
+
 \chapter{Implémentation}
-	les technos qu'on a utilisé\\
-	bibliotheques\\
-	Outils (e.g. XML parsers)\\
-	Launchpad client
-	
+les technos qu'on a utilisé\\
+bibliotheques\\
+Outils (e.g. XML parsers)\\
+Launchpad client
+
 \chapter{Résultats}
-	pull request?
+pull request?
+
 \chapter{Conclusion}
-	\section{Planning final}
-	\section{Difficultés rencontrées}
-	\section{Perspectives}
-	\section{Bilan et apports du TER}	
-annexes\n
-\t resumés \t code	
-\chapter*{Bibliographie}
+\section{Planning final}
+
+\section{Difficultés rencontrées}
+
+\section{Perspectives}
+
+\section{Bilan et apports du TER}
+annexes\\
+resumés\\
+code
+
+\bibliographystyle{unsrt}
+\bibliography{mybib}
+
 \end{document}
