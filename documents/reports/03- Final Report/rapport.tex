@@ -258,16 +258,89 @@ Un noeud du \textbf{Merkel DAG} désignant une \textbf{revision} est présenté 
 	\label{fig:swh_revision_node}
 \end{figure}
 
+\subsubsection{Identifieurs intrinsèques}
+Afin de pouvoir manipuler les différents \textbf{artefacts logiciels} à archiver, l'archive a besoin de les identifier et de les référencer. Pour ce faire, les identifieurs doivent être uniques, persistents, et intrinsèques. De plus, ils doivent supporter la gestion des versions, ainsi que l'identification à differents niveaux de granularité (\textit{i.e. d'une snapshot à un blob}). Ainsi, l'équipe de \texttt{Software Heritage} a adopté les identifieurs \textbf{IDO}\footnote{\textbf{\textit{Identifiers for Digital Objects}}}, permettant de satisfaire ces besoins\textsuperscript{\citep{dicosmoIDO}}.
+
+Les \textbf{IDO}s sont régis par la \textbf{syntaxe BNF} suivante :
+\begin{verbatim}
+	<identifier> ::= "swh" ":" <scheme_version> ":" <object_type> ":" <object_id> ;
+	<scheme_version> ::= "1" ;
+	<object_type> ::=
+	"snp" (* snapshot *)
+	| "rel" (* release *)
+	| "rev" (* revision *)
+	| "dir" (* directory *)
+	| "cnt" (* content *)
+	;
+	(* intrinsic object id, as hex-encoded SHA1 *)
+	<object_id> ::= 40 * <hex_digit> ;
+	<hex_digit> ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+	| "a" | "b" | "c" | "d" | "e" | "f" ;
+\end{verbatim}
+
+Par ailleurs, les \textbf{IDO}s peuvent être complementés par des \textbf{informations contextuelles}, dont deux types sont supportés pour le moment :
+\begin{description}
+	\item [\textit{origin} :] l'\textbf{URL} \textbf{software origin} du logiciel associé.
+	\item [\textit{line numbers of interest} :] le numéro d'une ligne, ou un intervalle.
+\end{description}
+
+Les \textbf{informations contextuelles} sont régies par la \textbf{syntaxe BNF} suivante :
+\begin{verbatim}
+	<identifier_with_context> ::= <identifier> [<lines_ctxt>] [<origin_ctxt>] ;
+	<lines_ctxt> ::= ";" "lines" "=" <line_number> ["-" <line_number>] ;
+	<origin_ctxt> ::= ";" "origin" "=" <url> ;
+	<line_number> ::= <dec_digit> + ;
+	<url> ::= (* RFC 3986 compliant URLs *) ;
+\end{verbatim}
+
+Les tables \ref{tab:IDO_examples} et \ref{tab:IDO_contextual_examples}, contiennent un ensemble d'exemples d'\textbf{IDO}s avec/sans des informations contextuelles pour différents types de noeuds du \textbf{Merkel DAG}.
+
+\begin{table}[!ht]
+	\centering
+	\begin{tabular}{|c||c|}
+		\hline
+		\textbf{IDO} & \textbf{Type de Noeud}\\
+		\hline
+		\texttt{swh:1:cnt:94a9ed024d3859793618152ea559a168bbcbb5e2} & \textbf{blob}\\
+		\hline
+		\texttt{swh:1:dir:d198bc9d7a6bcf6db04f476d29314f157507d505} & \textbf{directory}\\
+		\hline
+		\texttt{swh:1:rev:309cf2674ee7a0749978cf8265ab91a60aea0f7d} & \textbf{revision}\\
+		\hline
+		\texttt{swh:1:rel:22ece559cc7cc2364edc5e5593d63ae8bd229f9f} & \textbf{release}\\
+		\hline
+		\texttt{swh:1:snp:c7c108084bc0bf3d81436bf980b46e98bd338453} & \textbf{snapshot}\\
+		\hline
+	\end{tabular}
+	\caption{Exemples d'\textbf{IDO}s de différents noeuds du \textbf{Merkel DAG} de \texttt{Software Heritage}}
+	\label{tab:IDO_examples}
+\end{table}
+
+\begin{table}[!ht]
+	\centering
+	\begin{tabular}{|p{9cm}||p{6cm}|}
+		\hline
+		\textbf{IDO} & \textbf{Type de Noeud}\\
+		\hline
+		\texttt{swh:1:cnt:41ddb23118f92d721 8099a5e7a990cf58f1d07fa; origin=https://github.com/chrislgarry$\dots$; lines=64-72/} & \textbf{blob} avec l'\textbf{URL} du \textbf{software origin} et l'\textbf{intervalle des lignes} d'intérêt du code source désigné\\
+		\hline
+		\texttt{swh:1:dir:c6f07c2173a458d09 8de45d4c459a8f1916d900f; origin=https://github.com/id-Software/Qua$\dots$} & \textbf{directory} avec l'\textbf{URL} du \textbf{software origin}\\
+		\hline
+	\end{tabular}
+	\caption{Exemples d'\textbf{IDO}s avec d'\textbf{informations contextuelles} de différents noeuds du \textbf{Merkel DAG} de \texttt{Software Heritage}}
+	\label{tab:IDO_contextual_examples}
+\end{table}
+
 \subsection{Architecture conceptuelle et flot des données}
 \subsubsection{Flot d'ingestion des données}
-L'architecture à adopter pour la plateforme doit permettre de \og \textit{crawler} \fg~ une liste de plateformes d'hébergement de code source et d'archiver leur contenu. Pour ce faire, l'équipe de \texttt{Software Heritage} ont adopté une architecture conceptuelle\textsuperscript{\citep{dicosmoWhyAndHow}} divisant la tâche en deux sous-tâches, effectuées respectivement par deux composants de base: le \textit{listing} des plateformes d'hébergement par des \textbf{Listers} et le \textit{loading} de leur contenu au sein de l'archive de par des \textbf{Loaders} (cf. Figure \ref{fig:swh_conceptual_architecture}).
-
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[scale=0.5]{images/swh/conceptual_architecture.png}
 	\caption{L'architecture conceptuelle de la plateforme de \texttt{Software Heritage}\textsuperscript{\citep{dicosmoWhyAndHow}}}
 	\label{fig:swh_conceptual_architecture}
 \end{figure}
+
+L'architecture à adopter pour la plateforme doit permettre de \og \textit{crawler} \fg~ une liste de plateformes d'hébergement de code source et d'archiver leur contenu. Pour ce faire, l'équipe de \texttt{Software Heritage} ont adopté une architecture conceptuelle\textsuperscript{\citep{dicosmoWhyAndHow}} divisant la tâche en deux sous-tâches, effectuées respectivement par deux composants de base: le \textit{listing} des plateformes d'hébergement par des \textbf{Listers} et le \textit{loading} de leur contenu au sein de l'archive de par des \textbf{Loaders} (cf. Figure \ref{fig:swh_conceptual_architecture}).
 
 \subsubsection{Listing}
 Le \textit{listing} d'une plateforme d'hébergement de code source consiste à énumérer les \textbf{software origins} qui lui sont associés (e.g. des dépôts sur \texttt{GitHub} ou \texttt{BitBucket}, des paquets source individuels de \texttt{PyPI} ou \texttt{Debian}, $\dots$). Pour chaque plateforme, un \textbf{Lister} dédié doit être créé afin de \og \textit{mapper} \fg les modèles des \textbf{software origins} vers des modèles équivalents intégrables au sein de l'architecture de \texttt{Software Heritage}\textsuperscript{\citep{dicosmoWhyAndHow}}.
@@ -288,7 +361,7 @@ De plus, il existe deux styles de \textit{listing} :
 Le \textit{loading} du contenu des \textbf{software origins} d'une plateforme d'hébergement de code, correspond à l'extraction de leurs \textbf{artefacts logiciels} associés et leur ingestion au sein de l'archive. Pour chaque type de \textbf{software origin}, un \textbf{Laoder} dédié doit être créé afin d'\og \textit{ingérer} \fg les \textbf{artefacts logiciels} et \textbf{snapshots} associés, en assurant la contrainte de déduplication des noeuds au sein du \textbf{Merkel DAG}\textsuperscript{\citep{dicosmoWhyAndHow}} (e.g. un \textbf{Loader} pour chaque gestionnaire de version tels que \texttt{Git} ou \texttt{SVN}, un \textbf{Loader} pour chaque format d'un paquet source tels que \texttt{Debian source packages} ou \texttt{tarballs}, $\dots$).
 
 \subsubsection{Scheduling}
-Les tâches de \textit{listing} et de \textit{loading} occurrant régulièrement, un composant permettant de planifier leurs occurrences s'avère ainsi primordial. Il s'agit du composant \textbf{Scheduler}, permettant de \textbf{synchroniser} ces tâches dans une \textbf{queue de tâches asynchrones} opérée par un \textbf{serveur} \texttt{Celery}.
+Les tâches de \textit{listing} et de \textit{loading} occurrant régulièrement, un composant permettant de planifier leurs occurrences s'avère ainsi primordial. Il s'agit du composant \textbf{Scheduler}, permettant de \textbf{synchroniser} ces tâches dans une \textbf{queue de tâches asynchrones} opérée par un \textbf{serveur} \texttt{Celery}\textsuperscript{\citep{dicosmoWhyAndHow}}.
 
 Le \textbf{Scheduler} est implémenté selon les stratégies d'\textit{adaptive scheduling} et d'\textit{exponential backoff}, s'appuyant la notion d'\textbf{actions fructueuses} ou \textit{fruitful actions}. Ces stratégies permettent d'équilibrer entre la mise à jour du contenu de l'archive et la surcharge des plateformes concernées (\texttt{Software Heritage} et les plateformes d'hébergement de code consultées), surtout lors du \textit{loading} des \textbf{software origins} listés associés à une plateforme assez large.
 
@@ -305,65 +378,38 @@ La \textbf{stratégie} d'\textbf{Adaptive Scheduling} permet d'\textbf{augmenter
 \end{definition}
 
 \subsection{L'archive}
-% ##Archive
-% 1. logical representation: Merkel DAG data structure
-% 2. physical storage: different technologies due to the differences in size requirements for storing different parts of the graph
+D'une part, la \textbf{conception logique} de l'\textbf{archive} de \texttt{Software Heritage} consiste en un \textbf{Merkel DAG}. D'autre part, l'\textbf{implémentation physique} de l'\textbf{archive} combine plusieurs technologies de stockage, en raison des différentes tailles de stockage des noeuds du \textbf{Merkel DAG}.
 
-\subsubsection{Stockage des noeuds BLOB de l'archive}
-%les IDs, les fichiers
-% 3. blob nodes storage:
-%   - storage space: occupy the most space as they contain the full content of all archived source code files
-%   - storage technology:
-%     a. key-value object storage (key = intrinsic identifier of the Merkel DAG node)
-%     b. pros:
-%       * horizontal scaling: distribution of the object storage over multiple machines -> performance and redundancy
-%       * key-value paradigm is very popular among current storage technologies -> easily host copies of the bulk of the archive on premise/public cloud offerings
+\subsubsection{Stockage des noeuds BLOB}
+Les \textbf{blobs} occupent la \textbf{majorité de l'espace de stockage}, étant donné qu'ils contiennent la totalité du code source. Afin d'assurer l'espace et les méchanismes de stockage convenables, l'équipe de \texttt{Software Heritage} a introduit un composant \textbf{ObjectStorage} gérant ces tâches\textsuperscript{\citep{dicosmoWhyAndHow}}. Il s'agit d'une \textbf{table de hachage}, associant chaque \textbf{blob} à son \textbf{IDO} correspondant utilisé comme \textbf{clé}. Ceci permet la \textbf{distribution du stockage} dans un \textbf{cluster de tables de hachage} et de profiter des avantages associées.
 
+En cas de \textbf{collision} (\textit{i.e. lorsque le calcul des \textbf{IDO}s de deux objets différents donne un résultat identique}), l'archive utilise plusieurs \textbf{algorithmes de checksum} avec des contraintes d'unicité. Par conséquent, l'archive peut détecter les collisions avant l'ingestion d'un nouvel \textbf{artefact logiciel}. Parmi les algorithmes de checksum utilisé, nous notons \texttt{SHA1} et \texttt{SHA256}.
 
-\subsubsection{Stockage des autres noeuds des archives}
-% chemins, repertoires, snapshot, revisions, releases\\
-% postgres, etc
-% - RDBMS (Postgres):
-% 	a. roughly one table per node type
-% 	b. key: intrinsic identifier of Merkel DAG node
-% 	c. pros:
-% 		* horizontal scaling across multiple servers
-% 		* master/slave replication and point-in-time recovery -> performance and recovery
+\subsubsection{Stockage des autres noeuds}
+Les autres noeuds du \textbf{Merkel DAG}, notamment les \textbf{directories}, \textbf{revisions}, \textbf{releases} et \textbf{snapshots}, sont stockés chacun dans une \textbf{base de données relationnelle} \texttt{PostgresSQL} dédiée. Chaque \textbf{tuple} d'une table de base de données est identifié par l'\textbf{IDO} du \textbf{noeud correspondant} et contient son contenu\textsuperscript{\citep{dicosmoWhyAndHow}}. Ceci permet la \textbf{distribution du stockage} dans un \textbf{cluster de tables de base de données} et de profiter des avantages associées.
 
-\subsubsection{Stockage haché des objets}
-% - problem: hash collisions if two different objects hash to the same intrinsic identifier -> risk of storing only one of the node
-% - solution: multiple cryptographic checksums with unicity constraints on each of them to detect collisions before adding new software artifact to the archive
-% - types of checksums:
-% 	a. used: SHA1, SHA256, "salted" SHA1 checksums (in the style of what Git does)
-% 	b. in the process of adding: BLAKE2 checksums
-
-\subsubsection{Mise en mirroir des noeuds}
-% - change feed:
-% 	a. each type of node is associated to a change feed that takes note of all changes performed to the set of objects in the archive
-% 	b. persistent
-% 	c. the archive is append-only -> under normal circumstances, each feed will only list additions of new objects as soon as they are ingested into the archive
-% - pro of using change feeds: ideal for mirror operators -> after a full mirror step, can cheaply remain up to date w.r.t. the main archive
+\subsubsection{Réplication des noeuds}
+À chaque type de noeud du \textbf{Merkel DAG} est associé un \textbf{log de changement} ou \textit{feed change} persistant, détaillant l'ensemble des \textbf{changements effectués} sur les noeuds\textsuperscript{\citep{dicosmoWhyAndHow}}. Un tel outil est idéal pour la \textbf{réplication} des noeuds: après une opération de \textbf{réplication entière} d'un \textbf{log de changement}, les mirroirs peuvent rester à jour facilement par rapport à l'archive principal par \textbf{réplication incrémentale}.
 
 \subsubsection{Politique de rétention}
-% - current retention state:
-% 	a. two in-house mirrors of the entire object storage
-% 	b. a third copy currently being populated on a public cloud
-% - retention policy example: each file content must exist in at least 3 copies
-% - process: a software component of the archive:
-% 	a. keeps track of the number of copies of a given file content and where each of them is
-% 	b. periodically swipe all known objects for adherence to the policy
-% 	c. when fewer copies than desired exists, additional copies as needed to satisfy the retention policy are asynchronously made by the archiver
+La \textbf{politique de retention} permet de \textbf{contrôler la réplication des noeuds}, afin d'assurer un \textbf{système tolérant aux pannes} et la \textbf{longue préservation} des \textbf{artefacts logiciels}\textsuperscript{\citep{dicosmoWhyAndHow}}. Pour ce faire, la politique actuelle précise la nécessité d'avoir deux mirroirs locaux du composant \textbf{ObjectStorage} entier, et une troisième sur un cloud publique. Afin d'assurer le respect de cette politique, un \textbf{composant} de l'infrastructure de \texttt{Software Heritage} :
+\begin{itemize}
+	\item suit le nombre et la localisation des mirroirs de chaque \textbf{noeud archivé} ;
+	\item vérifie régulièrement l'\textbf{adhérence des noeuds archivés} à la \textbf{politique de retention} ;
+	\item crée des \textbf{réplications supplémentaires} d'un noeud archivé en cas de manque de mirroirs pour assurer son adhérence à la \textbf{politique de retention}.
+\end{itemize}
 
 \subsubsection{Récupération automatique des objects corrompus}
-% - example of an object corruption scenario: storage media decay
-% - process: a software component of the archive:
-% 	a. periodically checks each copy of all known objects: random selection at a suitable frequency
-% 	b. recomputes the intrinsic identifier of each copy and compares it with the known one to verify its integrity
-% 	c. in case of a mismatch:
-% 		* all known copies of the object are checked on-the-fly again
-% 		* assuming one pristine copy is found, it will be used to overwrite corrupted copies -> automatic healing
+En cas d'un noeud corrompu, un composant de l'infrastructure \texttt{Software Heritage}\textsuperscript{\citep{dicosmoWhyAndHow}} :
+\begin{itemize}
+	\item choisit \textbf{régulièrement} un ensemble \textbf{aléatoire} de \textbf{noeuds archivés} à \textbf{vérifier} ;
+	\item re-calcule l'\textbf{IDO} de chaque noeud de l'ensemble choisi, ainsi que celui de chacun de ses \textbf{mirroirs}, afin de vérifier leur \textbf{intégrité} ;
+	\item en cas de \textbf{violation d'une contrainte d'intégrité} par l'une des copies du noeud archivé, tous les mirroirs du noeud concerné seront \textbf{vérifiés dynamiquement}. Au cours de la vérification, les \textbf{versions corrompues} du noeud concerné seront \textbf{automatiquement remplacées} par un \textbf{mirroir} vérifiant la \textbf{contrainte d'intégrité} parmis ceux choisis.
+\end{itemize}
 
 \subsection{Architecture technique}
+
+\subsection{Diagrammes de séquence}
 
 \section{Méthodologie}
 % Sourceforge sitemap, api\\
@@ -373,6 +419,16 @@ La \textbf{stratégie} d'\textbf{Adaptive Scheduling} permet d'\textbf{augmenter
 % conclusion: on adoptera une strategie pour definir un lister, loader ou autre\\
 
 \section{Planning Prévisionnel}
+\begin{figure}[!ht]
+\hspace*{-3.5cm}
+\includegraphics[scale=0.48]{pdfs/feuille_de_route.pdf}
+\end{figure}
+
+\begin{figure}[!ht]
+\hspace*{-3cm}
+\includegraphics[scale=0.57]{images/planning_prev_p2.PNG}
+\caption{Planning prévisionel}
+\end{figure}
 
 \chapter{Conception}
 design de la solution proposée (diagrammes + explications)
