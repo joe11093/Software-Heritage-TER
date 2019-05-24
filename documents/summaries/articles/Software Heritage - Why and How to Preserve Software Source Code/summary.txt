@@ -84,8 +84,8 @@
     a. using code hosting platforms for distribution as well (most forges allow it)
     b. using archives organized by software ecosystems (e.g. CPAN, CRAN, etc.)
     c. keeping copies of source code released elsewhere:
-      square- software distributions (e.g. Debian, Fedora, etc.)
-      square- package management systems (e.g. npm, pip, OPAM, etc.)
+      * software distributions (e.g. Debian, Fedora, etc.)
+      * package management systems (e.g. npm, pip, OPAM, etc.)
 3. the need for a single point of entry:
   - a modern great library of source code
   - find and monitor the evolution of all publicly available source code, independently of its development and distribution platforms
@@ -203,8 +203,8 @@
   - pros:
     a. VCS history includes commit message (i.e. precious information that detail why specific changes have been made to a given software at a given moment)
     b. number of other digital preservation initiatives are already addressing other contextual aspects:
-      square- actors: The Internet Archive, Gmane, Olive, KEEP, E-ARK, PERSIST project
-      square- contributions: project websites, wikis, web-accessible issue trackers, mailing lists, preserving software executables
+      * actors: The Internet Archive, Gmane, Olive, KEEP, E-ARK, PERSIST project
+      * contributions: project websites, wikis, web-accessible issue trackers, mailing lists, preserving software executables
 3. embracing Unix philosophy :
   - source code only, where its contribution is most relevant
   - concretion :
@@ -234,8 +234,8 @@
 2. facts : to become a shared and trusted knowledge, only archival of qualified facts about software :
   a. no storing of bare metadata, e.g. Language=C++, License=GPL3
   b. only storing of qualified metadata, e.g. :
-    square- "version 3.1 of the program pygments invoked with a given command line on this particular file reported as written in C++;"
-    square- "version 2.6 of FOSSology license detection tool, ran with a given configuration(stored), reported the file as being released under the terms of version 3 of the GPL license"
+    * "version 3.1 of the program pygments invoked with a given command line on this particular file reported as written in C++;"
+    * "version 2.6 of FOSSology license detection tool, ran with a given configuration(stored), reported the file as being released under the terms of version 3 of the GPL license"
 
 ##Minimalism
 1. huge ramifications of the daunting task taken by Software Heritage
@@ -289,8 +289,8 @@
   - open provenance knowledge :
     a. keeping track of which software component at what granularity (from project release to individual source files) has been found where and when on the Internet
     b. consequences:
-      square- referencing and augmenting with other software-related facts (e.g. license information)
-      square- used by software build processes and tools => cope with current development challenges
+      * referencing and augmenting with other software-related facts (e.g. license information)
+      * used by software build processes and tools => cope with current development challenges
 4. support and sponsors that provide initial evidence that this potential is being understood: Microsoft, Intel, Huawei, Nokia
 
 #Data model
@@ -325,25 +325,25 @@
   - file contents (Blobs):
     a. definition: raw content of source code (i.e. sequence of bytes), without file names or any other metadata
     b. recurrent:
-      square- across different versions of the same software
-      square- different directories of the same project
-      square- different projects
+      * across different versions of the same software
+      * different directories of the same project
+      * different projects
   - directories:
     a. definition: a list of named directory entries pointing to other artifacts (file contents or sub-directories)
     b. metadata: entries are associated to arbitrary metadata :
-      square- varying with technologies
-      square- e.g. permission bits, modification timestamps, etc.
+      * varying with technologies
+      * e.g. permission bits, modification timestamps, etc.
   - revisions (Commits):
     a. software development: a time-indexed series of copies of a single "root" directory that contains the entire project source code
     b. software evolution: modifying the content of one or more files in that directory and recording their change
     c. definition: each recorded copy of a the root directory is called a revision:
-      square- directory with arbitrary metadata
-      square- manually added metadata: commit message
-      square- automatically added metadata: timestamps, preceding versions, etc.
+      * directory with arbitrary metadata
+      * manually added metadata: commit message
+      * automatically added metadata: timestamps, preceding versions, etc.
   - releases (Tags):
     a. definition: a release is a revision achieving a project milestone:
-      square- each release points to the last commit in project history corresponding to it along with arbitrary metadata
-      square- metadata examples: release name, release version, release message, cryptographic signatures, etc.
+      * each release points to the last commit in project history corresponding to it along with arbitrary metadata
+      * metadata examples: release name, release version, release message, cryptographic signatures, etc.
 
 ##Provenance information
 1. process: the crawling-related information are stored as provenance information in the Software Heritage archive
@@ -351,26 +351,26 @@
   - origins:
     a. definition: software origins are fine grained references to where source code artifacts archived by Software Heritage were retrieved from
     b. representation: <type, url> pairs:
-      square- type: the kind of software origin (e.g. git, svn, dsc (Debian source packages))
-      square- url: canonical URL (e.g. the address at which one can git clone a repository or wget a source tarball)
+      * type: the kind of software origin (e.g. git, svn, dsc (Debian source packages))
+      * url: canonical URL (e.g. the address at which one can git clone a repository or wget a source tarball)
   - projects:
     a. definition: abstract entities to precise software origins that:
-      square- are arbitrarily nestable in a versioned project/sub-project hierarchy
-      square- release several development resources (e.g. websites, issue trackers, mailing lists, software origins)
-      square- can be associated to arbitrary metadata and software origins (i.e. where their source code can be found)
+      * are arbitrarily nestable in a versioned project/sub-project hierarchy
+      * release several development resources (e.g. websites, issue trackers, mailing lists, software origins)
+      * can be associated to arbitrary metadata and software origins (i.e. where their source code can be found)
   - snapshots:
     a. software origins and the state of a development project: any kind of software origin offers multiple pointers to the current state of a development project:
-      square- VCS: branches (e.g. master, development or feature branches)
-      square- package distribution: suites (i.e. different maturity levels of individual packages (e.g. stable, development, etc.))
+      * VCS: branches (e.g. master, development or feature branches)
+      * package distribution: suites (i.e. different maturity levels of individual packages (e.g. stable, development, etc.))
     b. definition: a snapshot of a given software origin at a given time records all entry points found there and what they were pointing at
     c. examples:
-      square- VCS: a snapshot object that tracks the master branch commits at any given time
-      square- FOSS distribution: a snapshot object that tracks the most recent release of a given package in the stable suite
+      * VCS: a snapshot object that tracks the master branch commits at any given time
+      * FOSS distribution: a snapshot object that tracks the most recent release of a given package in the stable suite
   - visits:
     a. role: linking software origins and snapshots together
     b. definition: every time an origin is consulted, a new visit object is created, recording:
-      square- when the visit happened (according to Software Heritage clock)
-      square- the full snapshot of the state of the software origin
+      * when the visit happened (according to Software Heritage clock)
+      * the full snapshot of the state of the software origin
 
 ##Data structure
 1. fact: source code is duplicated:
@@ -393,8 +393,8 @@
     a. each artifact in the archive hierarchy, from blobs to entire snapshots, is a node
     b. each node contains all metadata that are specific to the node itself (e.g. commit messages, timestamps, file names)
     c. each node is identified by an intrinsic identifier:
-      square- computed from the node itself (i.e. a cryptographic hash of the node content)
-      square- node content: node-specific metadata and the identifiers of child nodes represented in a canonical form
+      * computed from the node itself (i.e. a cryptographic hash of the node content)
+      * node content: node-specific metadata and the identifiers of child nodes represented in a canonical form
   - edges between nodes:
     a. directory entries point to other directories or file contents
     b. revisions point to directories and previous revisions
@@ -403,8 +403,8 @@
   - example of a revision node in the Software Heritage Merkel DAG (cf. Figure 3 in article)
   - properties inherited from the Merkel data structure:
     a. built-in deduplication:
-      square- hash property: any software artifact encountered gets added to the archive, only if a corresponding node with a matching intrinsic identifier is not already available in the graph
-      square- consequence: file contents, directories, project snapshots are deduplicated -> storage costs only once
+      * hash property: any software artifact encountered gets added to the archive, only if a corresponding node with a matching intrinsic identifier is not already available in the graph
+      * consequence: file contents, directories, project snapshots are deduplicated -> storage costs only once
     b. side effect property: the entire development history of all source code archived in Software Heritage is available as a unified whole -> code reuse across different projects or software origins readily available
 
 #Architecture and data flow
@@ -487,15 +487,15 @@ Requirement: an architecture suitable for ingesting source code artifacts into t
   - storage technology:
     a. key-value object storage (key = intrinsic identifier of the Merkel DAG node)
     b. pros:
-      square- horizontal scaling: distribution of the object storage over multiple machines -> performance and redundancy
-      square- key-value paradigm is very popular among current storage technologies -> easily host copies of the bulk of the archive on premise/public cloud offerings
+      * horizontal scaling: distribution of the object storage over multiple machines -> performance and redundancy
+      * key-value paradigm is very popular among current storage technologies -> easily host copies of the bulk of the archive on premise/public cloud offerings
 4. rest of the DAG storage:
   - RDBMS (Postgres):
     a. roughly one table per node type
     b. key: intrinsic identifier of Merkel DAG node
     c. pros:
-      square- horizontal scaling across multiple servers
-      square- master/slave replication and point-in-time recovery -> performance and recovery
+      * horizontal scaling across multiple servers
+      * master/slave replication and point-in-time recovery -> performance and recovery
 5. hash object storage:
   - problem: hash collisions if two different objects hash to the same intrinsic identifier -> risk of storing only one of the node
   - solution: multiple cryptographic checksums with unicity constraints on each of them to detect collisions before adding new software artifact to the archive
@@ -523,8 +523,8 @@ Requirement: an architecture suitable for ingesting source code artifacts into t
     a. periodically checks each copy of all known objects: random selection at a suitable frequency
     b. recomputes the intrinsic identifier of each copy and compares it with the known one to verify its integrity
     c. in case of a mismatch:
-      square- all known copies of the object are checked on-the-fly again
-      square- assuming one pristine copy is found, it will be used to overwrite corrupted copies -> automatic healing
+      * all known copies of the object are checked on-the-fly again
+      * assuming one pristine copy is found, it will be used to overwrite corrupted copies -> automatic healing
 
 #Current status & road-map
 Software heritage grows incrementally: new listers/loaders get implemented periodically and run to ingest new content
