@@ -140,7 +140,7 @@ Les logiciels sont actuellement omniprésents dans tous les aspects de notre
 vie quotidienne; archiver leurs codes source paraît ainsi une tâche primordiale. À ce titre là, des plateformes ont déjà été proposées, telles que The Internet Archive
 et UNESCO Persist. Toutefois, ces plateformes se concentraient plutôt sur la
 préservation des fichier exécutables; allant jusqu'à offrir des émulateurs pour permettre l'éxecution des logiciels présents dans leurs archives.
-Par comparaison, Software Heritage s'interesse au code source des logiciels, pas à leurs éxecutables. En effet, le code source d'un logiciel constitue un artefact logiciel fondamental dans le domaine des connaisances scientifiques, culturelles, et techniques. Le code source est écrit sous une forme compréhensible par les humains, et peut façilement être transformé en une forme éxecutable par une machine. Le code source est muable et évolue celon les besoins. Ca préservation nous permet d'accéder à l'historique du developement d'un logiciel. 
+Par comparaison, Software Heritage s'interesse au code source des logiciels, pas à leurs éxecutables. En effet, le code source d'un logiciel constitue un artefact logiciel fondamental dans le domaine des connaisances scientifiques, culturelles, et techniques. Le code source est écrit sous une forme compréhensible par les humains, et peut façilement être transformé en une forme éxecutable par une machine. Le code source est muable et évolue celon les besoins. Ca préservation nous permet d'accéder à l'historique du developement d'un logiciel.
 
 Malgrés son importance dans notre vie quotidienne, il est façile de voir que nous prennons pas soin correctment du code source. Cela est dû à trois raisons principales.
 
@@ -156,7 +156,7 @@ Le code source est une entité fragile. Elle peut être façilement détruite ou
 \section{Les défis}
 \textbf{Identifier les plateformes d'hébergement :} Les projets peuvent être hébergés sur des plateformes bien connues, comme sur des plateformes obscures. Il faut construire un catalog des plateformes.
 \textbf{Supporter differents protocoles : } Software Heritage doit pouvoir recupérer leurs projets et doit pouvoir maintenir les modifications faites sur ces projets. Vu qu les plateformes d'hébergements sont hétérogènes, Software Heritage essayera de promouvoir des bonnes pratiques pour le préservation.
-\textbf{Parcourir les historiques de développement :} Les plateformes d'hébergements supportent differents logiciels de gestion de versions qui n'ont pas les même modèles de données. Software Heritage construira un tel modèle unifiant. 
+\textbf{Parcourir les historiques de développement :} Les plateformes d'hébergements supportent differents logiciels de gestion de versions qui n'ont pas les même modèles de données. Software Heritage construira un tel modèle unifiant.
 \section{Les principes de base}
 \subsection{Transparence et gratuité}
 Pour pouvoir assurer la préservation de l'archive sur le long terme, il faut que tout les élements formant l'archive soient open source et accessibles au publique.
@@ -165,7 +165,7 @@ Un tel archive est soumis à differents types de risques. Ces risques étant in�
 \subsection{Multitude des partenaires, sans profits}
 Pour atteindre ses objectifs, Software Heritage ne doit pas dépendre sur une seule entité qui cherche d'en profiter, et ne doit pas être créer pour la géneration de profits. Ce projet doit apporter de la valeur au public en large, et non seulement pour les organisations qui le supporte.
 \subsection{Pas de présélection}
- Il est impossible de savoir quel projets vont finir par être les plus importants. Il faut doc préserver tout les logiciels disponibles sans présélection, surtout que la capacité technique de faire cela est disponible. 
+ Il est impossible de savoir quel projets vont finir par être les plus importants. Il faut doc préserver tout les logiciels disponibles sans présélection, surtout que la capacité technique de faire cela est disponible.
 \subsection{Source Code First}
 Bien qu'il est intéressant de garder le contexte du code source (comme les Wiki, l'environement où le programme est éxécuté, etc), une telle tâche nécessite une énorme quantité de resources, surtout qu'il n'y a pas de préselection. Software Heritage se contente d'archiver les code sources ainsi que leur historique de développement capturé par les logiciels de gestion de versions. Cela permet de guarder des informations importantes qu'on retrouve dans les messages de commit.
 \subsection{Identifiants Intrinsèque}
@@ -474,9 +474,8 @@ En cas d'un noeud corrompu, un composant de l'infrastructure \texttt{Software He
 design de la solution proposée (diagrammes + explications)
 
 \chapter{Implémentation}
-<<<<<<< HEAD
-	Les Listers de Software Heritage et les codes qui les accompagnent sont écrits en Python. 
-	
+	Les Listers de Software Heritage et les codes qui les accompagnent sont écrits en Python.
+
 	\section{Le client Launchpad}
 	les technos qu'on a utilisé\\
 	bibliotheques\\
@@ -485,12 +484,6 @@ design de la solution proposée (diagrammes + explications)
 	parler du notebook
 	parler du code qu'on a créer par rapport au client (les classes du proxy)
 	parler du JSON et de son format, et comment il est mapped to SWH's model
-		
-=======
-les technos qu'on a utilisé\\
-bibliotheques\\
-Outils (e.g. XML parsers)\\
-Launchpad client
 
 \chapter{Résultats}
 pull request?
@@ -511,26 +504,11 @@ pull request?
 	Au cours de se projet, nous avons rencontrer des difficultés auxquelles nous ne nous attendions pas.
 	\subsection{Les APIs}
 	\subsection{Les tests}
-	
+
 	\section{Perspectives}
 	ce qu'on a fait (extensibilité du code, le fait qu'il est parametrable grace au classes abstraites)
 	ce qu'on peut améliorer (les tests? informations du context)
-	\section{Bilan et apports du TER}	
-annexes
-\t resumés \t code	
-\chapter*{Bibliographie}
-%todo%
-1)Software Heritage: Why and How to Preserve Software Source Code - Roberto Di Cosmo, Stefano Zacchiroli
-2) Identifiers for Digital Objects: the Case of Software Source Code Preservation - Roberto Di Cosmo, Morane Gruenpeter, Stefano Zacchirol
-\end{document}
-=======
-\section{Planning final}
-
-\section{Difficultés rencontrées}
-
-\section{Perspectives}
-
-\section{Bilan et apports du TER}
+	\section{Bilan et apports du TER}
 annexes\\
 resumés\\
 code
