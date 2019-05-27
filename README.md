@@ -6,8 +6,8 @@ Encadrant:
 Jessie Carbonnel
 
 Etudiants:
-Tasnim Shaqura
-Bachar Rima
+Tasnim Shaqura,
+Bachar Rima,
 Joseph Saba
 
 Meeting Minutes: Contient une partie des résumés de nos réunions et journées de travail collectives
