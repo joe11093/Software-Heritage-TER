@@ -3,7 +3,6 @@
 # See top-level LICENSE file for more information
 
 import re
-import time
 
 from swh.lister.core.indexing_lister import SWHIndexingHttpLister
 from swh.lister.launchpad.models import LaunchpadGitModel
@@ -15,15 +14,18 @@ class LaunchpadGitLister(SWHIndexingHttpLister):
     API_URL_INDEX_RE = re.compile(r'^.*/projects\?ws.size=\d+&memo=\d+&ws.start=(\d+)')
     LISTER_NAME = 'launchpad_git'
 
+
     def __init__(self, api_baseurl=None, override_config=None):
         SWHIndexingHttpLister.__init__(self, api_baseurl=api_baseurl, override_config=override_config)
         self.api_proxy = LaunchpadProxy()
         self.api_proxy.login("SWH access", "production", "devel")
 
+
     def request_uri(self, identifier):
         """Get the full request URI given the transport_request identifier."""
         path = self.PATH_TEMPLATE % (identifier, identifier)
         return self.api_baseurl + path
+
 
     def get_next_target_from_response(self, response):
         try:
@@ -33,17 +35,20 @@ class LaunchpadGitLister(SWHIndexingHttpLister):
         except:
             return None
 
+
     def get_model_from_repo(self, repo):
-        return{
-            'indexable': repo['unique_name'],
-			'uid': repo['unique_name'],
-            'name': repo['name'],
-            'full_name': repo['unique_name'],
-            'html_url': repo['web_link'],
-            'origin_url': repo['git_https_url'],
-            'origin_type': 'git',
-            'description': repo['description'],
-		}
+        return
+        {
+        'indexable': repo['unique_name'],
+        'uid': repo['unique_name'],
+        'name': repo['name'],
+        'full_name': repo['unique_name'],
+        'html_url': repo['web_link'],
+        'origin_url': repo['git_https_url'],
+        'origin_type': 'git',
+        'description': repo['description']
+        }
+
 
     def transport_response_simplified(self, response):
         repos = self.api_proxy.get_git_repos(response)

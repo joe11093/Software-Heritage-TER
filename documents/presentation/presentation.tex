@@ -14,7 +14,7 @@
   \hspace{\fill}
   \includegraphics[scale=0.25]{images/fdsLogo.jpg}
 }
-\date{3 juin 2019}
+\date{4 juin 2019}
 
 \begin{document}
 
@@ -34,11 +34,13 @@
   %Sous-section "Description de Software Heritage"
   \subsection{Description de Software Heritage}
     \begin{frame}{Description de Software Heritage}{Introduction}
+      summarize \textbf{Description de Software Heritage} du rapport
     \end{frame}
 
   %Sous-section "Contexte du TER"
   \subsection{Contexte du TER}
     \begin{frame}{Contexte du TER}{Introduction}
+      summarize \textbf{Description de Software Heritage} du rapport
     \end{frame}
 
 %Section "Problématique"
@@ -47,20 +49,29 @@
   %Sous-section "Le diaspora du code source"
   \subsection{Le diaspora du code source}
     \begin{frame}{Le diaspora du code source}{Problématique}
+      summarize \textbf{diaspora du code source} du rapport
     \end{frame}
 
   %Sous-section "La fragilité du code source"
   \subsection{La fragilité du code source}
     \begin{frame}{La fragilité du code source}{Problématique}
+    summarize \textbf{La fragilité du code source} du rapport
+    \end{frame}
+
+  %Sous-section "Software Heritage en tant que solution"
+  \subsection{Software Heritage en tant que solution}
+    \begin{frame}{Software Heritage en tant que solution}{Problématique}
+      summarize \textbf{Software Heritage en tant que solution} du rapport
     \end{frame}
 
   %Sous-section "Notre contribution"
   \subsection{Notre contribution}
     \begin{frame}{Notre contribution}{Problématique}
+      summarize \textbf{Notre contribution} du rapport
     \end{frame}
 
 %Section "Analyse"
-\section{Analyse}
+\section{Analyse \& Conception}
   \begin{frame}{Analyse}
   \end{frame}
 
@@ -72,36 +83,93 @@
     %Sous-sous-section "Modèle des données"
     \subsubsection{Modèle des données}
       \begin{frame}{Modèle des données}{Fonctionnement de Software Heritage}
+      \begin{itemize}
+        \item summarize Plateformes d’hébergement de code source
+        \item summarize artefacts logiciels
+        \item summarize informations de provenance
+        \item summarize structure de données
+        \item summarize Identifieurs intrinsèques
+      \end{itemize}
       \end{frame}
 
     %Sous-sous-section "Architecture et flot de données"
     \subsubsection{Architecture et flot de données}
       \begin{frame}{Architecture et flot de données}{Fonctionnement de Software Heritage}
+        \begin{itemize}
+          \item use the conceptual architecture figure to explain the data flow
+          \item summarize listing
+          \item summarize loading
+          \item summarize their implementation
+          \item summarize scheduler
+            \begin{enumerate}
+              \item summarize role of scheduling
+              \item summarize components of scheduling (runner and listener)
+              \item summarize strategies of scheduling
+            \end{enumerate}
+          \item sequence diagrams
+        \end{itemize}
       \end{frame}
 
     %Sous-sous-section "L'archive de Software Heritage"
     \subsubsection{L'archive de Software Heritage}
       \begin{frame}{L'archive de Software Heritage}{Fonctionnement de Software Heritage}
+        \begin{itemize}
+          \item summarize archive
+          \item concrete architecture to explain other components
+        \end{itemize}
       \end{frame}
+
   %Sous-section "Méthodologie"
   \subsection{Méthodologie}
     \begin{frame}{Méthodologie}{Analyse}
+      \begin{itemize}
+        \item display lister class hierarchy and explain classes and their relations
+        \item list candidates (Open Hub, Assembla, $\dots$)
+        \item summarize acceptation constraints of target plateform through table
+        \item summarize Launchpad and launchpadlib and use the figure
+      \end{itemize}
     \end{frame}
 
-%Section "Conception"
-\section{Conception}
-  \begin{frame}{Conception}
+  %Subcection "Conception"
+  \subsection{Conception}
+    \begin{frame}{Conception}
+      summarize conception using the figure
+    \end{frame}
+
+%Section "Implémentation et tests"
+\section{Implémentation et tests}
+  \begin{frame}{Implémentation et tests}
+    \begin{itemize}
+      \item using launchpadlib
+      \item jupyter notebook (not sure if we actually need that)
+      \item show example of JSON responses for entries and collections
+      \item summarize launchpad model with respect to the model class hierarchy of SWH (make a figure of models hierarchy)
+      \item summarize mapping using the figure
+      \item discuss the created classes (show listers class hierarchy with launchpad integrated again)
+      \item summarize lister implementation details (PATH\_TEMPLATE)
+      \item summarize the tasks created
+      \item summarize unittest, mocks, tox, and pytest tools
+      \item summarize the testing architecture of swh (make a figure of tests hierarchy)
+      \item summarize LaunchpadListerTester and the unit tests
+      \item summarize the test of the local instance of SWH (Docker, composen, snapshot of testing the instance through the web client)
+    \end{itemize}
   \end{frame}
 
-%Section "Implémentation"
-\section{Implémentation}
-  \begin{frame}{Implémentation}
-  \end{frame}
-
-%Section "Résultats"
-\section{Résultats}
+%Section "Résultats, pull requests, et test d'intégration"
+\section{Résultats, \textit{Pull requests}, et test d'intégration}
   \begin{frame}{Résultats}
+    either create a table to summarize tests (or snapshot of the unit tests results using pytest)
   \end{frame}
+
+  %Sous-section "Pull Requests"
+  \subsection{\textit{Pull Requests}}
+    \begin{frame}{Pull Requests}
+    \end{frame}
+
+  %Sous-section "Test d'intégration"
+  \subsection{Test d'intégration}
+    \begin{frame}{Test d'intégration}
+    \end{frame}
 
 %Section "Conclusion"
 \section{Conclusion}
@@ -111,11 +179,16 @@
   %Sous-section "Difficultés rencontées"
   \subsection{Difficultés rencontées}
     \begin{frame}{Difficultés rencontées}{Conclusion}
+      \begin{itemize}
+        \item summarize SourceForge API problems
+        \item summarize First model attempt
+        \item summarize instability and documentation of SWH
+      \end{itemize}
     \end{frame}
 
   %Sous-section "Perspectives"
   \subsection{Perspectives}
     \begin{frame}{Perspectives}{Conclusion}
+      summarize \textbf{Perspectives} in report
     \end{frame}
-
 \end{document}
